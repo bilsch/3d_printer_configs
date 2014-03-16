@@ -258,9 +258,37 @@
 // Kp: 156.93
 // Ki: 28.17
 // Kd: 218.55
-    #define  DEFAULT_bedKp 156.93
-    #define  DEFAULT_bedKi 28.17
-    #define  DEFAULT_bedKd 218.55
+//    #define  DEFAULT_bedKp 156.93
+//    #define  DEFAULT_bedKi 28.17
+//    #define  DEFAULT_bedKd 218.55
+   
+// 6:29:34 PM: PID Autotune start
+// 6:33:11 PM:  bias: 79 d: 79 min: 59.80 max: 60.32
+// 6:33:42 PM:  bias: 70 d: 70 min: 59.80 max: 60.16
+// 6:34:14 PM:  bias: 70 d: 70 min: 59.80 max: 60.16
+// 6:34:14 PM:  Ku: 498.80 Tu: 31.59
+// 6:34:14 PM:  Clasic PID 
+// 6:34:14 PM:  Kp: 299.28
+// 6:34:14 PM:  Ki: 18.95
+// 6:34:14 PM:  Kd: 1181.70
+// 6:34:45 PM:  bias: 70 d: 70 min: 59.80 max: 60.16
+// 6:34:45 PM:  Ku: 498.80 Tu: 30.93
+// 6:34:45 PM:  Clasic PID 
+// 6:34:45 PM:  Kp: 299.28
+// 6:34:45 PM:  Ki: 19.35
+// 6:34:45 PM:  Kd: 1157.19
+// 6:35:15 PM:  bias: 70 d: 70 min: 59.80 max: 60.16
+// 6:35:15 PM:  Ku: 498.80 Tu: 30.80
+// 6:35:15 PM:  Clasic PID 
+// 6:35:15 PM:  Kp: 299.28
+// 6:35:15 PM:  Ki: 19.43
+// 6:35:15 PM:  Kd: 1152.29
+
+ 
+    // helios off of ramps board, no relay
+    #define  DEFAULT_bedKp 299.28
+    #define  DEFAULT_bedKi 19.42
+    #define  DEFAULT_bedKd 1152.29
 
 // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -349,9 +377,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define max_software_endstops true  // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing
-#define X_MAX_POS 140
+#define X_MAX_POS 200
 #define X_MIN_POS 0
-#define Y_MAX_POS 140
+#define Y_MAX_POS 200
 #define Y_MIN_POS 0
 #define Z_MAX_POS 170
 #define Z_MIN_POS 0
@@ -467,7 +495,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,2560,76.9873}  // default steps per unit for Ultimaker
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,2560,80.836665}  // default steps per unit for Ultimaker
 #define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 25}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {120,120,150,80}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 

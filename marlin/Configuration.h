@@ -214,9 +214,9 @@
 //    #define  DEFAULT_Kd 350
     
 // result of autotune. manually brought hot end to 200 with above manual tweak, then ran auto tune
-    #define  DEFAULT_Kp 14.04
-    #define  DEFAULT_Ki 0.85
-    #define  DEFAULT_Kd 57.74
+    #define  DEFAULT_Kp 14.21
+    #define  DEFAULT_Ki 1.07
+    #define  DEFAULT_Kd 47.26
 
 #endif // PIDTEMP
 

@@ -139,9 +139,8 @@
 // 110 is Pt100 with 1k pullup (non standard)
 // 70 is 500C thermistor for Pico hot end
 
-// assuming TEMP_SENSOR_0 is extruder
-// reference http://e3d-online.com/index.php?route=extras/blog/getblog&blog_id=19
-#define TEMP_SENSOR_0 5
+// reference http://www.b3innovations.com/?product=pico-ks
+#define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_1 5
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_BED 5
@@ -166,7 +165,7 @@
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
-#define HEATER_0_MAXTEMP 240
+#define HEATER_0_MAXTEMP 297
 #define HEATER_1_MAXTEMP 240
 #define HEATER_2_MAXTEMP 240
 #define BED_MAXTEMP 130
@@ -215,9 +214,9 @@
 //    #define  DEFAULT_Ki 0.5
 //    #define  DEFAULT_Kd 350
     
-    #define  DEFAULT_Kp 25.25
-    #define  DEFAULT_Ki 2.24
-    #define  DEFAULT_Kd 71.29
+    #define  DEFAULT_Kp 20.9
+    #define  DEFAULT_Ki 1.11
+    #define  DEFAULT_Kd 98.61
 
 #endif // PIDTEMP
 
@@ -242,7 +241,7 @@
 #define MAX_BED_POWER 255 // limits duty cycle to bed; 255=full current
 
 
- #define PIDTEMPBED
+#define PIDTEMPBED
 
 #ifdef PIDTEMPBED
 //120v 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
@@ -367,7 +366,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define DISABLE_E false // For all extruders
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
-#define INVERT_X_DIR true    // for Mendel set to false, for Orca set to true
+#define INVERT_X_DIR false    // for Mendel set to false, for Orca set to true
 #define INVERT_Y_DIR true    // for Mendel set to true, for Orca set to false
 #define INVERT_Z_DIR false     // for Mendel set to false, for Orca set to true
 #define INVERT_E0_DIR false   // for direct drive extruder v9 set to true, for geared extruder set to false
@@ -386,9 +385,10 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // Travel limits after homing
 #define X_MAX_POS 200
 #define X_MIN_POS 0
-#define Y_MAX_POS 200
+#define Y_MAX_POS 170
 #define Y_MIN_POS 0
-#define Z_MAX_POS 170
+// replace x endstop wire, we can add approx 40mm more to the z
+#define Z_MAX_POS 225
 #define Z_MIN_POS 0
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
@@ -498,16 +498,16 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 //// MOVEMENT SETTINGS
 #define NUM_AXIS 4 // The axis order in all axis related arrays is X, Y, Z, E
-#define HOMING_FEEDRATE {3000, 3000, 125, 0}  // set the homing speeds (mm/min)
+#define HOMING_FEEDRATE {3000, 3000, 250, 0}  // set the homing speeds (mm/min)
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,2015.75,77.55}  // steps per unit
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 100}    // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {150,150,25,80}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {55.99,55.99,2015.75,100}  // steps per unit
+#define DEFAULT_MAX_FEEDRATE          {500, 500, 300, 200}    // (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {300,300,250,150}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
-#define DEFAULT_ACCELERATION          25    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  125   // X, Y, Z and E max acceleration in mm/s^2 for retracts
+#define DEFAULT_ACCELERATION          125    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  75   // X, Y, Z and E max acceleration in mm/s^2 for retracts
 
 // Offset of the extruders (uncomment if using more than one and relying on firmware to position when changing).
 // The offset has to be X=0, Y=0 for the extruder 0 hotend (default extruder).
@@ -549,8 +549,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define PLA_PREHEAT_HPB_TEMP 0
 #define PLA_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
 
-#define ABS_PREHEAT_HOTEND_TEMP 220
-#define ABS_PREHEAT_HPB_TEMP 115
+#define ABS_PREHEAT_HOTEND_TEMP 225
+#define ABS_PREHEAT_HPB_TEMP 110
 #define ABS_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
 
 //LCD and SD support

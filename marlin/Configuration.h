@@ -157,7 +157,7 @@
 // The minimal temperature defines the temperature below which the heater will not be enabled It is used
 // to check that the wiring to the thermistor is not broken.
 // Otherwise this would lead to the heater being powered on all the time.
-#define HEATER_0_MINTEMP 5 // Maybe this will result in shutting down?
+#define HEATER_0_MINTEMP 5
 #define HEATER_1_MINTEMP 5
 #define HEATER_2_MINTEMP 5
 #define BED_MINTEMP 5
@@ -304,7 +304,7 @@
 //can be software-disabled for whatever purposes by
 #define PREVENT_DANGEROUS_EXTRUDE
 //if PREVENT_DANGEROUS_EXTRUDE is on, you can still disable (uncomment) very long bits of extrusion separately.
-#define PREVENT_LENGTHY_EXTRUDE
+// #define PREVENT_LENGTHY_EXTRUDE
 
 #define EXTRUDE_MINTEMP 170
 #define EXTRUDE_MAXLENGTH (X_MAX_LENGTH+Y_MAX_LENGTH) //prevent extrusion of very large distances.
@@ -501,9 +501,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {55.99,55.99,2015.75,100}  // steps per unit
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 300, 200}    // (mm/sec)
-#define DEFAULT_MAX_ACCELERATION      {300,300,250,200}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {55.99,55.99,2015.75,96.46}  // steps per unit
+#define DEFAULT_MAX_FEEDRATE          {500, 500, 200, 25}    // (mm/sec)
+#define DEFAULT_MAX_ACCELERATION      {9000,9000,300, 200}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
 #define DEFAULT_ACCELERATION          200    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  75   // X, Y, Z and E max acceleration in mm/s^2 for retracts

@@ -423,7 +423,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // Travel limits after homing
 #define X_MAX_POS 190
 #define X_MIN_POS 0
-#define Y_MAX_POS 190
+#define Y_MAX_POS 165
 #define Y_MIN_POS 0
 #define Z_MAX_POS 260
 #define Z_MIN_POS 0
@@ -541,7 +541,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // wades 625.71
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {55.99,55.99,2015.75,625.71}  // steps per unit
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 10, 2.5}    // (mm/sec)
+#define DEFAULT_MAX_FEEDRATE          {500, 500, 20, 2.5}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {9000,9000,100, 10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
 #define DEFAULT_ACCELERATION          500    // X, Y, Z and E max acceleration in mm/s^2 for printing moves

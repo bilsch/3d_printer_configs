@@ -539,8 +539,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // default settings
 
-// wades 625.71
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {55.99,55.99,2015.75,625.71}  // steps per unit
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {55.99,55.99,2015.75,595}  // steps per unit
 #define DEFAULT_MAX_FEEDRATE          {500, 500, 20, 2.5}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {9000,9000,100, 10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
@@ -553,7 +552,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 // #define EXTRUDER_OFFSET_X {0.0, 20.00} // (in mm) for each extruder, offset of the hotend on the X axis
 // #define EXTRUDER_OFFSET_Y {0.0, 5.00}  // (in mm) for each extruder, offset of the hotend on the Y axis
 
-// The speed change that does not require acceleration (i.e. the software might assume it can be done instantaneously)
+// The speed change that does not require acceleration (i.e. the software might assume it can be done instantaneously)3
 #define DEFAULT_XYJERK                20.0    // (mm/sec)
 #define DEFAULT_ZJERK                 0.4     // (mm/sec)
 #define DEFAULT_EJERK                 5.0    // (mm/sec)

@@ -214,9 +214,21 @@
 //    #define  DEFAULT_Ki 0.5
 //    #define  DEFAULT_Kd 350
     
-    #define  DEFAULT_Kp 20.9
-    #define  DEFAULT_Ki 1.11
-    #define  DEFAULT_Kd 98.61
+    // makerfarm j-head generic
+//    #define  DEFAULT_Kp 20.9
+//    #define  DEFAULT_Ki 1.11
+//    #define  DEFAULT_Kd 98.61
+
+  // hotends.com jhead with ceramic heater cartridge
+  //  bias: 31 d: 31 min: 198.42 max: 202.14
+  // Ku: 21.21 Tu: 39.72
+  // Classic PID
+  // Kp: 12.73
+  // Ki: 0.64
+  // Kd: 63.18
+    #define  DEFAULT_Kp 12.73
+    #define  DEFAULT_Ki 0.64
+    #define  DEFAULT_Kd 63.18
 
 #endif // PIDTEMP
 
@@ -405,7 +417,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define DISABLE_INACTIVE_EXTRUDER true //disable only inactive extruders and keep active extruder enabled
 
 #define INVERT_X_DIR true    // for Mendel set to false, for Orca set to true
-#define INVERT_Y_DIR true    // for Mendel set to true, for Orca set to false
+#define INVERT_Y_DIR false    // for Mendel set to true, for Orca set to false
 #define INVERT_Z_DIR false     // for Mendel set to false, for Orca set to true
 #define INVERT_E0_DIR true   // for direct drive extruder v9 set to true, for geared extruder set to false
 #define INVERT_E1_DIR false    // for direct drive extruder v9 set to true, for geared extruder set to false
@@ -421,11 +433,11 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define max_software_endstops true  // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing
-#define X_MAX_POS 190
+#define X_MAX_POS 170
 #define X_MIN_POS 0
-#define Y_MAX_POS 165
+#define Y_MAX_POS 150
 #define Y_MIN_POS 0
-#define Z_MAX_POS 260
+#define Z_MAX_POS 200
 #define Z_MIN_POS 0
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
@@ -539,8 +551,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {55.99,55.99,2015.75,580}  // steps per unit
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 20, 2.5}    // (mm/sec)
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,2015.75,800}  // steps per unit
+#define DEFAULT_MAX_FEEDRATE          {500, 500, 20, 25}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {9000,9000,100, 10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
 #define DEFAULT_ACCELERATION          500    // X, Y, Z and E max acceleration in mm/s^2 for printing moves

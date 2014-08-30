@@ -437,7 +437,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 #define X_MIN_POS 0
 #define Y_MAX_POS 150
 #define Y_MIN_POS 0
-#define Z_MAX_POS 200
+#define Z_MAX_POS 235
 #define Z_MIN_POS 0
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
@@ -553,8 +553,8 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // X has 16-tooth, Y has 36-tooth due to the belt grinding against the frame
 // May switch X to the 36-tooth, we'll see
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,44.44,2015.75,800}  // steps per unit
-#define DEFAULT_MAX_FEEDRATE          {500, 500, 20, 25}    // (mm/sec)
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,44.44,2015.75,765}  // steps per unit
+#define DEFAULT_MAX_FEEDRATE          {500, 500, 4, 25}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {9000,9000,100, 10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 
 #define DEFAULT_ACCELERATION          500    // X, Y, Z and E max acceleration in mm/s^2 for printing moves

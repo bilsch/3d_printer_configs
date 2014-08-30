@@ -10,6 +10,11 @@ Layer heights for ob1.4 1/4" acme
 | .1mm | 0.09525 |
 | 0.05mm | 0.05556 |
 
+Build plate size
+================
+
+160 x 150 x 200
+
 Filament temperatures
 =====================
 
@@ -18,3 +23,9 @@ Filament temperatures
 | ABS | 230 | 110 |
 | PLA | 190 | 0 |
 | tglase blue | 224 | 0 |
+
+
+0.67 @ 185
+0.7 @ 192
+0.66 @ 196
+0.57 @ 75/min

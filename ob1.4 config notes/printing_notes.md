@@ -21,11 +21,25 @@ Filament temperatures
 | Filament | Hot end temp | heated bed temp |
 | -------- | ------------ | --------------- |
 | ABS | 230 | 110 |
-| PLA | 190 | 0 |
+| PLA | 192 | 40 |
 | tglase blue | 224 | 0 |
 
+PTFE tubing notes
+=================
 
-0.67 @ 185
-0.7 @ 192
-0.66 @ 196
-0.57 @ 75/min
+| metric | imperial |
+| ------ | -------- |
+| 2.37998 | 3/32 |
+| 3.9624 | 5/32 |
+
+Measurements for 3dprintmi vertical x vs ob1.4
+==============================================
+
+| Part | mm | vertical x standard compliant? |
+| ---- | -- | ------------------------------ |
+| 3dprintmi mm from center of z screw to center of X rail | 12.1 | ? |
+| 3dprintmi mm from center of x rails | 69 | ? |
+| 3dprintmi mm from center of z bearing to center of z screw | 29 | ? |
+| ob1.4 mm from center of z screw to center of X rail | 23 | ? |
+| ob1.4 mm from center of x rails | 58 | ? |
+| ob1.4 mm from center of z bearing to center of z screw | 29 | ? |

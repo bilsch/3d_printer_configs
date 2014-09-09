@@ -226,9 +226,18 @@
   // Kp: 12.73
   // Ki: 0.64
   // Kd: 63.18
-    #define  DEFAULT_Kp 12.73
-    #define  DEFAULT_Ki 0.64
-    #define  DEFAULT_Kd 63.18
+  /*  */
+
+    #define  DEFAULT_Kp 23.93
+    #define  DEFAULT_Ki 1.94
+    #define  DEFAULT_Kd 73.71
+   
+   /*
+    * e3d v6
+    #define  DEFAULT_Kp 14.44
+    #define  DEFAULT_Ki 1.23
+    #define  DEFAULT_Kd 42.34
+   */
 
 #endif // PIDTEMP
 
@@ -553,7 +562,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = true; // set to true to invert the logic of
 
 // X has 16-tooth, Y has 36-tooth due to the belt grinding against the frame
 // May switch X to the 36-tooth, we'll see
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,44.44,2015.75,765}  // steps per unit
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {100.5,44.44,2015.75,760}  // steps per unit
 #define DEFAULT_MAX_FEEDRATE          {500, 500, 4, 25}    // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {9000,9000,100, 10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for skeinforge 40+, for older versions raise them a lot.
 

@@ -52,6 +52,7 @@ extruder_steps_per_mm                        1520             # Marlin 16-step 7
 extruder_default_feed_rate                   600              # Default rate ( mm/minute ) for moves where only the extruder moves
 extruder_acceleration                        500              # Acceleration in mm/sec^2, only used for retracts
 extruder_max_speed                           1000             # mm/sec NOTE only used for retracts
+extruder_filament_diameter                   1.75             # filament diameter
 
 extruder_step_pin                            2.0              # Pin for extruder step signal
 extruder_dir_pin                             0.5              # Pin for extruder dir signal

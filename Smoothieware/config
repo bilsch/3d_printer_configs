@@ -11,7 +11,7 @@ gamma_steps_per_mm                           2015.75           # Z , Marlin 16-s
 
 # Planner module configuration : Look-ahead and acceleration configuration
 planner_queue_size                           32               # DO NOT CHANGE THIS UNLESS YOU KNOW EXACTLY WHAT YOUR ARE DOING
-acceleration                                 1500             # Acceleration in mm/second/second.
+acceleration                                 1000             # Acceleration in mm/second/second.
 z_acceleration                               100              # Acceleration for Z only moves in mm/s^2, 0 disables it, disabled by default. DO NOT SET ON A DELTA
 acceleration_ticks_per_second                1000             # Number of times per second the speed is updated
 junction_deviation                           0.05             # Similar to the old "max_jerk", in millimeters, see : https://github.com/grbl/grbl/blob/master/planner.c#L409
@@ -48,7 +48,7 @@ second_usb_serial_enable                     false            # This enables a s
 
 # Extruder module configuration
 extruder_module_enable                       true             # Whether to activate the extruder module at all. All configuration is ignored if false
-extruder_steps_per_mm                        754.21           # Marlin 16-step 760 , Steps per mm for extruder stepper
+extruder_steps_per_mm                        746.69           # Marlin 16-step 760 , Steps per mm for extruder stepper
 extruder_default_feed_rate                   600              # Default rate ( mm/minute ) for moves where only the extruder moves
 extruder_acceleration                        500              # Acceleration in mm/sec^2, only used for retracts
 extruder_max_speed                           1000             # mm/sec NOTE only used for retracts

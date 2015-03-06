@@ -8,6 +8,9 @@
   * mm: 250 x 320 x 3.3
   * inch: 9.84252 x 12.5984 x 0.129921
 1. printbed options
+  * PEI
+    * http://www.amazon.com/dp/B0013HJBA4/ref=cm_sw_su_dp
+    * http://www.amazon.com/dp/B0013HO424/ref=cm_sw_su_dp
   * FR4
     * bilsch:  yep, you want the 1/16 thick, and either unclad or single side clad. NO copper
     * clipped to glass

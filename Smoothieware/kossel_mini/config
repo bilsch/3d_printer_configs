@@ -2,7 +2,7 @@
 
 arm_solution                                 linear_delta     # delta selection
 arm_length                                   225              # this is the length of an arm from hinge to hinge
-arm_radius                                   210              # this is the horiontal distance from hinge to hinge when the effector is centered
+arm_radius                                   130              # this is the horiontal distance from hinge to hinge when the effector is centered
 gamma_max                                    217.08
 
 default_feed_rate                            4000             # Default rate ( mm/minute ) for G1/G2/G3 moves
@@ -56,11 +56,10 @@ second_usb_serial_enable                     false            # This enables a s
 
 # Extruder module configuration
 extruder_module_enable                       true             # Whether to activate the extruder module at all. All configuration is ignored if false
-extruder_steps_per_mm                        304              # Steps per mm for extruder stepper
+extruder_steps_per_mm                        923.238          # un-tuned, likely to change
 extruder_default_feed_rate                   600              # Default rate ( mm/minute ) for moves where only the extruder moves
 extruder_acceleration                        500              # Acceleration in mm/sec^2 only used for retracts
 extruder_max_speed                           25               # mm/sec NOTE only used for retracts
-
 extruder_step_pin                            2.0              # Pin for extruder step signal
 extruder_dir_pin                             0.5              # Pin for extruder dir signal
 extruder_en_pin                              0.4              # Pin for extruder enable signal
@@ -146,6 +145,18 @@ temperature_control.bed.beta                 3950             # 160mm 12v from T
 temperature_control.bed.set_m_code           140              #
 temperature_control.bed.set_and_wait_m_code  190              #
 temperature_control.bed.designator           B                #
+#
+# I suspect this is over-shooting a lot. The plate feels a lot warmer and the thermistor is likely not well insulated/placed
+# Cycle 8: max: 60.8624, min: 59.1172, avg separation: 0.279972
+#  Ku: 372.096, Pu: 45.85
+#  Trying:
+#  Kp: 223.3
+#  Ki: 9.739
+#  Kd:  1280
+#
+temperature_control.bed.p_factor          223.3
+temperature_control.bed.i_factor          9.739
+temperature_control.bed.d_factor          1280
 
 # Pause button
 pause_button_enable                          true             #

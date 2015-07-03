@@ -1,8 +1,9 @@
 # Robot module configurations : general handling of movement G-codes and slicing into moves
 
 arm_solution                                 linear_delta     # delta selection
-arm_length                                   215.9              # this is the length of an arm from hinge to hinge
-arm_radius                                   193              # this is the horiontal distance from hinge to hinge when the effector is centered
+arm_length                                   225              # this is the length of an arm from hinge to hinge
+arm_radius                                   210              # this is the horiontal distance from hinge to hinge when the effector is centered
+gamma_max                                    217.08
 
 default_feed_rate                            4000             # Default rate ( mm/minute ) for G1/G2/G3 moves
 default_seek_rate                            4000             # Default rate ( mm/minute ) for G0 moves
@@ -30,23 +31,23 @@ base_stepping_frequency                      100000           # Base frequency f
 alpha_step_pin                               2.1              # Pin for alpha stepper step signal
 alpha_dir_pin                                0.11             # Pin for alpha stepper direction
 alpha_en_pin                                 0.10             # Pin for alpha enable pin
-alpha_current                                1.0              # X stepper motor current
-alpha_max_rate                               10000.0          # mm/min actuator max speed
-x_axis_max_speed                             10000.0          # mm/min cartesian max speed
+alpha_current                                1.5              # X stepper motor current
+alpha_max_rate                               7000.0          # mm/min actuator max speed
+x_axis_max_speed                             7000.0          # mm/min cartesian max speed
 
 beta_step_pin                                2.2              # Pin for beta stepper step signal
 beta_dir_pin                                 0.20             # Pin for beta stepper direction
 beta_en_pin                                  0.19             # Pin for beta enable
-beta_current                                 1.0              # Y stepper motor current
-beta_max_rate                                10000.0          # mm/min
-y_axis_max_speed                             10000.0          # mm/min
+beta_current                                 1.5              # Y stepper motor current
+beta_max_rate                                7000.0          # mm/min
+y_axis_max_speed                             7000.0          # mm/min
 
 gamma_step_pin                               2.3              # Pin for gamma stepper step signal
 gamma_dir_pin                                0.22             # Pin for gamma stepper direction
 gamma_en_pin                                 0.21             # Pin for gamma enable
-gamma_current                                1.0              # Z stepper motor current
-gamma_max_rate                               10000.0          # mm/min
-z_axis_max_speed                             10000.0          # mm/min
+gamma_current                                1.5              # Z stepper motor current
+gamma_max_rate                               7000.0          # mm/min
+z_axis_max_speed                             7000.0          # mm/min
 
 # Serial communications configuration ( baud rate default to 9600 if undefined )
 uart0.baud_rate                              115200           # Baud rate for the default hardware serial port
@@ -63,7 +64,7 @@ extruder_max_speed                           25               # mm/sec NOTE only
 extruder_step_pin                            2.0              # Pin for extruder step signal
 extruder_dir_pin                             0.5              # Pin for extruder dir signal
 extruder_en_pin                              0.4              # Pin for extruder enable signal
-delta_current                                0.7              # Extruder stepper motor current
+delta_current                                1.2              # Extruder stepper motor current
 
 # Hotend temperature control configuration
 temperature_control.hotend.enable            true             # Whether to activate this ( "hotend" ) module at all. All configuration is ignored if false.
@@ -76,10 +77,18 @@ temperature_control.hotend.set_m_code        104              #
 temperature_control.hotend.set_and_wait_m_code 109            #
 temperature_control.hotend.designator        T                #
 
-#P39.98 I5.00 D79.91
-# temperature_control.hotend.p_factor          39.98            #
-# temperature_control.hotend.i_factor          5.00             #
-# temperature_control.hotend.d_factor          79.91            #
+# Start PID tune for index E0, designator: T
+# Cycle 3: max: 223.13, min: 209.178, avg separation: 6.89738
+# Cycle 3: max: 223.13, min: 199.359, avg separation: 6.89738
+# Cycle 4: max: 223.13, min: 199.359, avg separation: 0.23671
+#   Ku: 27.3176, Pu: 46.75
+#   Trying:
+#   Kp:  16.4
+#   Ki: 0.701
+#   Kd:    96
+temperature_control.hotend.p_factor          16.4
+temperature_control.hotend.i_factor          0.701
+temperature_control.hotend.d_factor          96
 
 # Switch module for fan control
 switch.fan.enable                            true             #
@@ -101,11 +110,10 @@ beta_max                                     0                #
 gamma_max_endstop                            1.28^            #
 gamma_homing_direction                       home_to_max      #
 gamma_min                                    0                #
-gamma_max                                    186.6            # change to suit your height
 
-alpha_fast_homing_rate_mm_s                  200              # feedrates in mm/second
-beta_fast_homing_rate_mm_s                   200              # "
-gamma_fast_homing_rate_mm_s                  200              # "
+alpha_fast_homing_rate_mm_s                  150              # feedrates in mm/second
+beta_fast_homing_rate_mm_s                   150              # "
+gamma_fast_homing_rate_mm_s                  150              # "
 alpha_slow_homing_rate_mm_s                  20               # "
 beta_slow_homing_rate_mm_s                   20               # "
 gamma_slow_homing_rate_mm_s                  20               # "
@@ -128,9 +136,16 @@ zprobe.probe_height                          5               # how much above be
 
 # associated with zprobe the leveling strategy to use
 leveling-strategy.delta-calibration.enable   true            # basic delta calibration
-leveling-strategy.delta-calibration.radius   23              # the probe radius
+leveling-strategy.delta-calibration.radius   15              # the probe radius
 leveling-strategy.three-point-leveling.home_first true
 
+temperature_control.bed.enable               true             #
+temperature_control.bed.thermistor_pin       0.23             #
+temperature_control.bed.heater_pin           2.7              #
+temperature_control.bed.beta                 3950             # 160mm 12v from TridPrinting
+temperature_control.bed.set_m_code           140              #
+temperature_control.bed.set_and_wait_m_code  190              #
+temperature_control.bed.designator           B                #
 
 # Pause button
 pause_button_enable                          true             #

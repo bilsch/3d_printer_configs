@@ -1,9 +1,9 @@
 # Robot module configurations : general handling of movement G-codes and slicing into moves
 
 arm_solution                                 linear_delta     # delta selection
-arm_length                                   215              # this is the length of an arm from hinge to hinge
-arm_radius                                   130               # this is the horiontal distance from hinge to hinge when the effector is centered
-gamma_max                                    217.11           # fine tuned, mayb +/- .01 mm
+arm_length                                   215.5            # this is the length of an arm from hinge to hinge
+arm_radius                                   130              # this is the horiontal distance from hinge to hinge when the effector is centered
+gamma_max                                    217.10           # fine tuned, mayb +/- .01 mm
 
 default_feed_rate                            4000             # Default rate ( mm/minute ) for G1/G2/G3 moves
 default_seek_rate                            4000             # Default rate ( mm/minute ) for G0 moves
@@ -167,5 +167,3 @@ digipot_max_current                          2.4             # max current
 digipot_factor                               106.0           # factor for converting current to digipot value
 
 return_error_on_unhandled_gcode              false            #
-
-

@@ -1,9 +1,9 @@
 # Robot module configurations : general handling of movement G-codes and slicing into moves
 
 arm_solution                                 linear_delta     # delta selection
-arm_length                                   215.5            # this is the length of an arm from hinge to hinge
-arm_radius                                   130              # this is the horiontal distance from hinge to hinge when the effector is centered
-gamma_max                                    217.10           # fine tuned, mayb +/- .01 mm
+arm_length                                   228.5            # this is the length of an arm from hinge to hinge
+arm_radius                                   125              # this is the horiontal distance from hinge to hinge when the effector is centered
+gamma_max                                    265.2            # fine tuned, mayb +/- .01 mm
 
 default_feed_rate                            4000             # Default rate ( mm/minute ) for G1/G2/G3 moves
 default_seek_rate                            4000             # Default rate ( mm/minute ) for G0 moves
@@ -12,9 +12,9 @@ mm_per_arc_segment                           0.5              # Arcs are cut int
 delta_segments_per_second                    100               # segments per second used for deltas
 
 # Arm solution configuration : Cartesian robot. Translates mm positions into stepper positions
-alpha_steps_per_mm                           160             # Steps per mm for alpha stepper
-beta_steps_per_mm                            160             # Steps per mm for beta stepper
-gamma_steps_per_mm                           160             # Steps per mm for gamma stepper
+alpha_steps_per_mm                           200             # Steps per mm for alpha stepper
+beta_steps_per_mm                            200             # Steps per mm for beta stepper
+gamma_steps_per_mm                           200             # Steps per mm for gamma stepper
 
 # Planner module configuration : Look-ahead and acceleration configuration
 planner_queue_size                           32               # DO NOT CHANGE THIS UNLESS YOU KNOW EXACTLY WHAT YOUR ARE DOING
@@ -32,22 +32,22 @@ alpha_step_pin                               2.1              # Pin for alpha st
 alpha_dir_pin                                0.11             # Pin for alpha stepper direction
 alpha_en_pin                                 0.10             # Pin for alpha enable pin
 alpha_current                                1.5              # X stepper motor current
-alpha_max_rate                               7000.0          # mm/min actuator max speed
-x_axis_max_speed                             7000.0          # mm/min cartesian max speed
+alpha_max_rate                               9000.0          # mm/min actuator max speed
+x_axis_max_speed                             9000.0          # mm/min cartesian max speed
 
 beta_step_pin                                2.2              # Pin for beta stepper step signal
 beta_dir_pin                                 0.20             # Pin for beta stepper direction
 beta_en_pin                                  0.19             # Pin for beta enable
 beta_current                                 1.5              # Y stepper motor current
-beta_max_rate                                7000.0          # mm/min
-y_axis_max_speed                             7000.0          # mm/min
+beta_max_rate                                9000.0          # mm/min
+y_axis_max_speed                             9000.0          # mm/min
 
 gamma_step_pin                               2.3              # Pin for gamma stepper step signal
 gamma_dir_pin                                0.22             # Pin for gamma stepper direction
 gamma_en_pin                                 0.21             # Pin for gamma enable
 gamma_current                                1.5              # Z stepper motor current
-gamma_max_rate                               7000.0          # mm/min
-z_axis_max_speed                             7000.0          # mm/min
+gamma_max_rate                               9000.0          # mm/min
+z_axis_max_speed                             9000.0          # mm/min
 
 # Serial communications configuration ( baud rate default to 9600 if undefined )
 uart0.baud_rate                              115200           # Baud rate for the default hardware serial port
@@ -56,7 +56,7 @@ second_usb_serial_enable                     false            # This enables a s
 
 # Extruder module configuration
 extruder_module_enable                       true             # Whether to activate the extruder module at all. All configuration is ignored if false
-extruder_steps_per_mm                        923.238          # un-tuned, likely to change
+extruder_steps_per_mm                        765.92          # un-tuned, likely to change
 extruder_default_feed_rate                   600              # Default rate ( mm/minute ) for moves where only the extruder moves
 extruder_acceleration                        500              # Acceleration in mm/sec^2 only used for retracts
 extruder_max_speed                           25               # mm/sec NOTE only used for retracts
@@ -124,19 +124,6 @@ gamma_homing_retract_mm                      5                # "
 alpha_trim                                   0                 # software trim for alpha stepper endstop (in mm) - moves down
 beta_trim                                    0                 # software trim for beta stepper endstop (in mm)
 gamma_trim                                   0                 # software trim for gamma stepper endstop (in mm)
-
-# optional Z probe http://smoothieware.org/zprobe
-zprobe.enable                                true           # set to true to enable a zprobe
-zprobe.probe_pin                             1.29!^          # pin probe is attached to if NC remove the !
-zprobe.slow_feedrate                         5               # mm/sec probe feed rate
-#zprobe.debounce_count                       100             # set if noisy
-zprobe.fast_feedrate                         100             # move feedrate
-zprobe.probe_height                          5               # how much above bed to start probe
-
-# associated with zprobe the leveling strategy to use
-leveling-strategy.delta-calibration.enable   true            # basic delta calibration
-leveling-strategy.delta-calibration.radius   48              # the probe radius
-leveling-strategy.three-point-leveling.home_first true
 
 temperature_control.bed.enable               true             #
 temperature_control.bed.thermistor_pin       0.23             #

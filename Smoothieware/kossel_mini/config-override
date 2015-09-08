@@ -1,23 +1,23 @@
 ;Steps per unit:
-M92 X160.00000 Y160.00000 Z160.00000
+M92 X200.00000 Y200.00000 Z200.00000
 ;Acceleration mm/sec^2:
 M204 S1000.00000 Z0.00000
 ;X- Junction Deviation, Z- Z junction deviation, S - Minimum Planner speed:
 M205 X0.05000 Z-1.00000 S0.00000
 ;Max feedrates in mm/sec, XYZ cartesian, ABC actuator:
-M203 X116.66666 Y116.66666 Z116.66666 A116.66666 B116.66666 C116.66666
+M203 X150.00000 Y150.00000 Z150.00000 A150.00000 B150.00000 C150.00000
 ;Optional arm solution specific settings:
-M665 L215.5000 R103.7344
+M665 L228.5000 R125.0000
 ;Motor currents:
 M907 X1.50000 Y1.50000 Z1.50000 E1.20000 
 ;Home offset (mm):
-M206 X0.00 Y0.00 Z0.00
+M206 X0.00 Y0.00 Z-4.10
 ;Trim (mm):
-M666 X-0.023 Y-1.064 Z-0.610
+M666 X-4.800 Y-3.900 Z-3.700
 ;Max Z
-M665 Z217.100
+M665 Z265.200
 ;E Steps per mm:
-M92 E923.2380
+M92 E765.9200
 ;E Filament diameter:
 M200 D0.0000
 ;E retract length, feedrate, zlift length, feedrate:

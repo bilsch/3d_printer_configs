@@ -31,21 +31,21 @@ base_stepping_frequency                      100000           # Base frequency f
 alpha_step_pin                               2.1              # Pin for alpha stepper step signal
 alpha_dir_pin                                0.11             # Pin for alpha stepper direction
 alpha_en_pin                                 0.10             # Pin for alpha enable pin
-alpha_current                                1.5              # X stepper motor current
+alpha_current                                1.0              # X stepper motor current
 alpha_max_rate                               9000.0          # mm/min actuator max speed
 x_axis_max_speed                             9000.0          # mm/min cartesian max speed
 
 beta_step_pin                                2.2              # Pin for beta stepper step signal
 beta_dir_pin                                 0.20             # Pin for beta stepper direction
 beta_en_pin                                  0.19             # Pin for beta enable
-beta_current                                 1.5              # Y stepper motor current
+beta_current                                 1.0              # Y stepper motor current
 beta_max_rate                                9000.0          # mm/min
 y_axis_max_speed                             9000.0          # mm/min
 
 gamma_step_pin                               2.3              # Pin for gamma stepper step signal
 gamma_dir_pin                                0.22             # Pin for gamma stepper direction
 gamma_en_pin                                 0.21             # Pin for gamma enable
-gamma_current                                1.5              # Z stepper motor current
+gamma_current                                1.0              # Z stepper motor current
 gamma_max_rate                               9000.0          # mm/min
 z_axis_max_speed                             9000.0          # mm/min
 
@@ -70,24 +70,21 @@ temperature_control.hotend.enable            true             # Whether to activ
 temperature_control.hotend.thermistor_pin    0.24             # Pin for the thermistor to read
 temperature_control.hotend.heater_pin        2.5              # Pin that controls the heater
 temperature_control.hotend.thermistor        EPCOS100K        # see http://smoothieware.org/temperaturecontrol#toc5
-#temperature_control.hotend.beta             4066             # or set the beta value
 
 temperature_control.hotend.set_m_code        104              #
 temperature_control.hotend.set_and_wait_m_code 109            #
 temperature_control.hotend.designator        T                #
 
-# Start PID tune for index E0, designator: T
-# Cycle 3: max: 223.13, min: 209.178, avg separation: 6.89738
-# Cycle 3: max: 223.13, min: 199.359, avg separation: 6.89738
-# Cycle 4: max: 223.13, min: 199.359, avg separation: 0.23671
-#   Ku: 27.3176, Pu: 46.75
-#   Trying:
-#   Kp:  16.4
-#   Ki: 0.701
-#   Kd:    96
-temperature_control.hotend.p_factor          16.4
-temperature_control.hotend.i_factor          0.701
-temperature_control.hotend.d_factor          96
+#Cycle 4: max: 196.445, min: 189.209, avg separation: 0.225822
+#  Ku: 89.7374, Pu: 23.35
+#  Trying:
+#  Kp:  53.8
+#  Ki: 4.612
+#  Kd:   157
+#
+temperature_control.hotend.p_factor          53.8
+temperature_control.hotend.i_factor          4.612
+temperature_control.hotend.d_factor          157
 
 # Switch module for fan control
 switch.fan.enable                            true             #

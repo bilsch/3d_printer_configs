@@ -82,9 +82,9 @@ temperature_control.hotend.designator        T                #
 #  Ki: 4.612
 #  Kd:   157
 #
-temperature_control.hotend.p_factor          53.8
-temperature_control.hotend.i_factor          4.612
-temperature_control.hotend.d_factor          157
+temperature_control.hotend.p_factor          53.824
+temperature_control.hotend.i_factor          4.6118
+temperature_control.hotend.d_factor          157.1526
 
 # Switch module for fan control
 switch.fan.enable                            true             #
@@ -141,6 +141,26 @@ temperature_control.bed.designator           B                #
 temperature_control.bed.p_factor          223.3
 temperature_control.bed.i_factor          9.739
 temperature_control.bed.d_factor          1280
+
+zprobe.enable                true               # set to true to enable a zprobe
+zprobe.probe_pin             1.29^             # pin probe is attached to if NC remove the !, Azteeg X5 this is 1.29
+zprobe.slow_feedrate         5                  # mm/sec probe feed rate
+#zprobe.debounce_count       100                # set if noisy
+zprobe.fast_feedrate         100                # move feedrate
+zprobe.probe_height          5                  # how much above bed to start probe NB only needed for G32 on delta
+zprobe.return_feedrate       0                  # feedrate after a probe, default 0 is double of slow_feedrate (mm/s)
+
+# leveling strategy stuffs
+leveling-strategy.delta-calibration.enable   true
+leveling-strategy.delta-calibration.radius   70
+#leveling-strategy.ZGrid-leveling.enable         true
+#leveling-strategy.ZGrid-leveling.bed_x           60
+#leveling-strategy.ZGrid-leveling.bed_y           60
+#leveling-strategy.ZGrid-leveling.rows           9          # X divisions (Default 5)
+#leveling-strategy.ZGrid-leveling.cols           9          # Y divisions (Default 5)
+#leveling-strategy.ZGrid-leveling.probe_offsets  0,0,0.2
+#leveling-strategy.ZGrid-leveling.slow_feedrate  50
+
 
 # Pause button
 pause_button_enable                          true             #

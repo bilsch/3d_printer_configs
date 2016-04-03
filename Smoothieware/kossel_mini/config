@@ -2,22 +2,22 @@
 
 arm_solution                                 linear_delta     # delta selection
 # TBD need to measure
-arm_length                                   370.00           # this is the length of an arm from hinge to hinge
-arm_radius                                   203.00           # this is the horiontal distance from hinge to hinge when the effector is centered
-gamma_max                                    430              # change to suit your height
+arm_length                                   228.50           # this is the length of an arm from hinge to hinge
+arm_radius                                   125.00           # this is the horiontal distance from hinge to hinge when the effector is centered
+gamma_max                                    386.5            # change to suit your height
 
 default_feed_rate                            4000             # Default rate ( mm/minute ) for G1/G2/G3 moves
 default_seek_rate                            4000             # Default rate ( mm/minute ) for G0 moves
-mm_per_arc_segment                           0.1              # Arcs are cut into segments ( lines ), this is the length for these segments.  Smaller values mean more resolution, higher values mean faster computation
+mm_per_arc_segment                           0.5              # Arcs are cut into segments ( lines ), this is the length for these segments.  Smaller values mean more resolution, higher values mean faster computation
 #mm_per_line_segment                          5                # Lines can be cut into segments ( not usefull with cartesian coordinates robots ).
 delta_segments_per_second                    100               # segments per second used for deltas
 
 # Arm solution configuration : Cartesian robot. Translates mm positions into stepper positions
 # Steps per mm = ((360°/Motor step size°) * (1/Driver microstepping))/(Belt pitch * Tooth count)
-# ((360/.9) * (1/(1/128)))/(2 * 16)
-alpha_steps_per_mm                           1600             # .9deg 1/128 step
-beta_steps_per_mm                            1600             # .9deg 1/128 step
-gamma_steps_per_mm                           1600             # .9deg 1/128 step
+# ((360/.9) * (1/(1/64)))/(2 * 16) == 800
+alpha_steps_per_mm                           800             # .9deg 1/128 step
+beta_steps_per_mm                            800             # .9deg 1/128 step
+gamma_steps_per_mm                           800             # .9deg 1/128 step
 
 # Planner module configuration : Look-ahead and acceleration configuration
 planner_queue_size                           32               # DO NOT CHANGE THIS UNLESS YOU KNOW EXACTLY WHAT YOUR ARE DOING
@@ -34,23 +34,23 @@ base_stepping_frequency                      100000           # Base frequency f
 alpha_step_pin                               2.1              # Pin for alpha stepper step signal
 alpha_dir_pin                                0.11             # Pin for alpha stepper direction
 alpha_en_pin                                 0.10!            # Pin for alpha enable pin
-alpha_current                                1.68              # X stepper motor current
-alpha_max_rate                               30000.0          # mm/min actuator max speed
-x_axis_max_speed                             30000.0          # mm/min cartesian max speed
+alpha_current                                1.0              # X stepper motor current
+alpha_max_rate                               50000.0          # mm/min actuator max speed
+x_axis_max_speed                             50000.0          # mm/min cartesian max speed
 
 beta_step_pin                                2.2              # Pin for beta stepper step signal
 beta_dir_pin                                 0.20             # Pin for beta stepper direction
 beta_en_pin                                  0.19!            # Pin for beta enable
-beta_current                                 1.68              # Y stepper motor current
-beta_max_rate                                30000.0          # mm/min
-y_axis_max_speed                             30000.0          # mm/min
+beta_current                                 1.0              # Y stepper motor current
+beta_max_rate                                50000.0          # mm/min
+y_axis_max_speed                             50000.0          # mm/min
 
 gamma_step_pin                               2.3              # Pin for gamma stepper step signal
 gamma_dir_pin                                0.22             # Pin for gamma stepper direction
 gamma_en_pin                                 0.21!            # Pin for gamma enable
-gamma_current                                1.68              # Z stepper motor current
-gamma_max_rate                               30000.0          # mm/min
-z_axis_max_speed                             30000.0          # mm/min
+gamma_current                                1.0              # Z stepper motor current
+gamma_max_rate                               50000.0          # mm/min
+z_axis_max_speed                             50000.0          # mm/min
 
 # Serial communications configuration ( baud rate default to 9600 if undefined )
 uart0.baud_rate                              115200           # Baud rate for the default hardware serial port
@@ -85,10 +85,9 @@ temperature_control.hotend.designator        T                #
 #temperature_control.hotend.max_temp         300              # Set maximum temperature - Will prevent heating above 300 by default
 #temperature_control.hotend.min_temp         0                # Set minimum temperature - Will prevent heating below 0 by default
 
-#P39.98 I5.00 D79.91
-# temperature_control.hotend.p_factor          39.98            #
-# temperature_control.hotend.i_factor          5.00             #
-# temperature_control.hotend.d_factor          79.91            #
+temperature_control.hotend.p_factor          69.6
+temperature_control.hotend.i_factor          8.216
+temperature_control.hotend.d_factor          148
 
 # For bed
 temperature_control.bed.enable               true            #
@@ -169,7 +168,7 @@ gamma_trim                                   0                 # software trim f
 #move_to_origin_after_home                    true             # move XY to 0,0 after homing
 
 # optional Z probe http://smoothieware.org/zprobe
-zprobe.enable                                false           # set to true to enable a zprobe
+zprobe.enable                                true           # set to true to enable a zprobe
 zprobe.probe_pin                             1.29!^          # pin probe is attached to if NC remove the !
 zprobe.slow_feedrate                         5               # mm/sec probe feed rate
 #zprobe.debounce_count                       100             # set if noisy

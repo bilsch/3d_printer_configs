@@ -17,7 +17,7 @@ M208 X285 Y285 Z300 S0 ; Set axis maxima
 ; Endstops
 M574 X1 Y1 Z1 S1 ; Define active high microswitches
 M558 P1 X0 Y0 Z0 H5 F120 T12000 ; Set Z probe type to unmodulated, the axes for which it is used and the probe + travel speeds
-G31 P600 X0 Y0 Z2.5 ; Set Z probe trigger value, offset and trigger height
+G31 P500 X0 Y20 Z2.5 ; Set Z probe trigger value, offset and trigger height
 
 ; Drives
 M569 P0 S0 ; Drive 0 goes backwards
@@ -28,8 +28,8 @@ M350 X16 Y16 Z16 E16 I1 ; Configure microstepping with interpolation
 M92 X200 Y200 Z200 E358.9821 ; Set steps per mm
 M566 X10500 Y10500 Z1500 E2400 ; Set maximum instantaneous speed changes (mm/min)
 M203 X18000 Y18000 Z2400 E3600 ; Set maximum speeds (mm/min)
-M201 X500 Y500 Z250 E250 ; Set accelerations (mm/s^2)
-M906 X800 Y800 Z800 E800 I30 ; Set motor currents (mA) and motor idle factor in per cent
+M201 X300 Y300 Z150 E150 ; Set accelerations (mm/s^2)
+M906 X1200 Y1200 Z1800 E1000 I30 ; Set motor currents (mA) and motor idle factor in per cent
 M84 S30 ; Set idle timeout
 
 ; Heaters
@@ -48,8 +48,9 @@ M550 Pcbot ; Set machine name
 M552 P0.0.0.0 S1 ; Enable network and acquire dynamic address via DHCP
 
 ; Fans
-M106 P0 S1 I0 F500 H1 T45 ; Set fan 0 value, PWM signal inversion and frequency. Thermostatic control is turned on
-M106 P1 S1 I0 F500 H-1 ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned off
-M106 P2 S1 I0 F500 H-1 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned off
+M106 P0 S1 I0 F500 H-1 ; Set fan 0 value, PWM signal inversion and frequency. Thermostatic control is turned off - part fan
+M106 P1 S1 I0 F500 H1 T60 ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned on - e3d
+M106 P2 S1 I0 F500 H1 T60 S127 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
 
 ; Custom settings are not configured
+M107 ; start with all fans off

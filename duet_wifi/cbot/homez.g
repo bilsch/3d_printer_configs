@@ -5,16 +5,16 @@
 
 ; Lift Z relatively to current position
 G91
-G1 Z5 F12000
+G1 Z5 F5000
 
 ; Back to absolute positioning
 G90
 
 ; Go to first bed probe point and home the Z axis
-G1 X15 Y15 F12000
-G30
+G1 X15 Y15 F5000
+G30 ; single z probe
 
 ; Uncomment the following lines to lift Z after probing
-;G91
-;G1 Z5 F200
-;G90
+G91
+G1 Z0 F200
+G90

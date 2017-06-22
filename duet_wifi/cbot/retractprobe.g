@@ -6,3 +6,5 @@
 ; G1 Z35 F10000			; raise head again
 ; G1 X0 Y0				; move to somewhere sensible
 ; M564 S1					; apply limits again
+
+M280 P3 S90 I1

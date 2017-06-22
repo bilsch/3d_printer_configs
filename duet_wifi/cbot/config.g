@@ -15,9 +15,9 @@ M208 X0 Y0 Z0 S1 ; Set axis minima
 M208 X285 Y285 Z300 S0 ; Set axis maxima
 
 ; Endstops
-M574 X1 Y1 Z1 S1 ; Define active high microswitches
-; M574 E0 S1 X1 Y1 Z1;
-; M558 P1 X0 Y0 Z0 H5 F120 T5000 ; Set Z probe type to unmodulated, the axes for which it is used and the probe + travel speeds
+; M574 X1 Y1 Z1 S1 ; Define active high microswitches
+M574 E0 S1 X1 Y1 Z1;
+M558 P1 X0 Y0 Z0 H5 F120 T5000 ; Set Z probe type to unmodulated, the axes for which it is used and the probe + travel speeds
 
 ; Drives
 M569 P0 S0 ; Drive 0 goes backwards
@@ -34,12 +34,13 @@ M201 X600 Y600 Z150 E150 ; Set accelerations (mm/s^2)
 M906 X1000 Y1000 Z1900 E1000 I30 ; Set motor currents (mA) and motor idle factor in per cent
 M84 S30 ; Set idle timeout
 
-; Heaters
-M143 S290 ; Set maximum heater temperature to 290C
-M301 H0 S1.00 P10 I0.1 D200 T0.4 W180 B30 ; Use PID on bed heater (may require further tuning)
-M305 P0 T100000 B4138 C0 R4700 ; Set thermistor + ADC parameters for heater 0
-; M305 P1 T100000 B4719 C7.08e-8 R4700 ; Set thermistor + ADC parameters for heater 1
+; hotend heater config on pt100 channel 0
+M143 S390 ; Set maximum heater temperature to 290C
 M305 P1 X200
+
+; bed heater config on pt100 channel 1
+M305 P0 X201
+M143 H0 S201
 
 ; Tools
 M563 P0 D0 H1 ; Define tool 0
@@ -55,12 +56,6 @@ M106 P0 S1 I0 F500 H-1 ; Set fan 0 value, PWM signal inversion and frequency. Th
 M106 P1 S1 I0 F500 H1 T60 ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned on - e3d
 M106 P2 S0.5 I0 F500 H1 T60 S127 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
 
-; setup dltouch
-; M307 H3 A-1 C-1 D-1 ; using heater 3 pwm for servo
-
-
 ; Custom settings are not configured
 M107 ; start with all fans off
 ; G29 S1 ; load map for compensation
-0
-

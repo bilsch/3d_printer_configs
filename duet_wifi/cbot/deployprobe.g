@@ -5,3 +5,5 @@
 ; G1 X12 F1000			; move probe back
 ; G1 X0 Y0 F10000			; move to somewhere sensible
 ; M564 S1					; apply limits again
+
+M280 P3 S10 I1

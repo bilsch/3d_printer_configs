@@ -12,20 +12,22 @@ G1 Z5 F12000
 ; Move towards X and Y axis endstops (first pass)
 G1 X-290 F5000 S1
 G1 Y-290 F5000 S1
+G1 Z-290 F5000 S1
 
 ; Go back a few mm
-; G1 X5 Y5 F12000
+G1 X5 Y5 Z5 F12000
 
 ; Move slowly to axis endstops once more (second pass)
 G1 X-290 F360 S1
 G1 Y-290 F360 S1
+G1 Z-290 F360 S1
 
 ; Absolute positioning
 G90
 
 ; Go to first bed probe point and home the Z axis
 ; G1 X15 Y15 F5000
-G30 ; single zprobe
+; G30 ; single zprobe
 
 ; Uncomment the following line to lift the nozzle after probing
 ;G1 Z5 F200

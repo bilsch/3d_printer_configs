@@ -24,10 +24,10 @@ M569 P0 S0 ; Drive 0 goes backwards
 M569 P1 S1 ; Drive 1 goes forwards
 M569 P2 S1 ; Drive 2 goes forwards
 M569 P3 S1 ; Drive 3 goes forwards
-M350 Z16 E16 ; Configure microstepping without interpolation
-M350 X16 Y16 I1 ; Configure microstepping with interpolation for X/Y only
+M350 Z16 ; Configure microstepping without interpolation
+M350 E16 X16 Y16 I1 ; Configure microstepping with interpolation for X/Y only
 
-M92 X200 Y200 Z400 E347.8895 ; Set steps per mm
+M92 X200 Y200 Z400 E695.779 ; old E695.7790 ; old 347.8895 ; Set steps per mm
 M566 X300 Y300 Z200 E2400 ; Set maximum instantaneous speed changes (mm/min)
 M203 X13000 Y13000 Z1200 E3600 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z150 E150 ; Set accelerations (mm/s^2)

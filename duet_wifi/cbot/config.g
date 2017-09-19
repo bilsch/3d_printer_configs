@@ -21,7 +21,7 @@ M558 P1 X0 Y0 Z0 H5 F120 T5000 ; Set Z probe type to unmodulated, the axes for w
 
 ; Drives
 M569 P0 S0 ; Drive 0 goes backwards
-M569 P1 S1 ; Drive 1 goes forwards
+M569 P1 S0 ; Drive 1 goes backwards
 M569 P2 S1 ; Drive 2 goes forwards
 M569 P3 S1 ; Drive 3 goes forwards
 M350 Z16 ; Configure microstepping without interpolation
@@ -49,7 +49,11 @@ G10 P0 R0 S0 ; Set initial tool 0 active and standby temperatures to 0C
 
 ; Network
 M550 Pcbot ; Set machine name
-M552 P0.0.0.0 S1 ; Enable network and acquire dynamic address via DHCP
+
+; reset wifi
+M552 S0
+G4 P2000
+M552 S1
 
 ; Fans
 M106 P0 S1 I0 F500 H-1 ; Set fan 0 value, PWM signal inversion and frequency. Thermostatic control is turned off - part fan

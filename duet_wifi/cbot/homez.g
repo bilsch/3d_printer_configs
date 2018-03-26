@@ -21,13 +21,13 @@
 
 ; no zprobe for now
 G91                ; relative mode
-G1 Z5 F500         ; raise head 4mm to ensure it is above the switch trigger height
+G1 Z5 F500 S2      ; raise head 4mm to ensure it is above the switch trigger height
 G90                ; back to absolute mode
 G1 X0 Y0 F2000     ; put head wherever you want it to be when you home Z (omit this line if it doesn't matter)
 G91                ; relative mode
 G1 Z-300 F500 S1  ; move Z down until the switch triggers
 G91                ; relative mode
-G1 Z5 F500         ; raise head 4mm to ensure it is above the switch trigger height
+G1 Z5 F500 S2      ; raise head 4mm to ensure it is above the switch trigger height
 G91                ; relative mode
 G1 Z-10 F200 S1  ; move Z down until the switch triggers
 G90                ; back to absolute mode

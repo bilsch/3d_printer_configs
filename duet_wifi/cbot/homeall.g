@@ -7,7 +7,7 @@
 G91
 
 ; Lift Z
-G1 Z5 F12000
+G1 Z5 F12000 S2
 
 ; Move towards X and Y axis endstops (first pass)
 G1 X-290 F5000 S1

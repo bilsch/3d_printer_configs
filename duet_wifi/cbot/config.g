@@ -15,9 +15,13 @@ M208 X0 Y0 Z0 S1 ; Set axis minima
 M208 X285 Y285 Z300 S0 ; Set axis maxima
 
 ; Endstops
-; M574 X1 Y1 Z1 S1 ; Define active high microswitches
-M574 E0 S1 X1 Y1; ; add Z1 back if removing bltouch
-M574 Z1 S2 ; Define Z to use Probe. Home to Min
+M574 X1 Y2 S1                                      ; Set active high endstops
+
+; Z-Probe
+M574 Z1 S2                                         ; Set endstops controlled by probe
+M558 P1 H5 F120 T6000                              ; Set Z probe type to unmodulated and the dive height + speeds
+G31 P25 X25 Y18 Z2.5                               ; Set Z probe trigger value, offset and trigger height
+M557 X15:270 Y15:270 S20                           ; Define mesh grid
 
 ; Drives
 M569 P0 S0 ; Drive 0 goes backwards
@@ -56,6 +60,9 @@ G10 P0 R0 S0 ; Set initial tool 0 active and standby temperatures to 0C
 ; M563 P1 D1 H2 F2 ; tool 1 uses extruder drive 1 and heater 2. Fan 2 is mapped to fan 0
 ; G10 P1 S0 R0 X10 Y0 ; set tool 1 temperatures and offsets
 
+; Automatic power saving
+M911 S10 R11 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000" ; Set voltage thresholds and actions to run on power loss
+
 ; Network
 M550 Pcbot ; Set machine name
 
@@ -77,4 +84,4 @@ M557 X5:205 Y5:165 S20 ; Define mesh grid
 
 ; Custom settings are not configured
 M107 ; start with all fans off
-; G29 S1 ; load map for compensation
+T0   ; Select first tool

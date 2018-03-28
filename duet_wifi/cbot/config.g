@@ -16,19 +16,19 @@ M208 X285 Y285 Z300 S0 ; Set axis maxima
 
 ; Endstops
 ; M574 X1 Y1 Z1 S1 ; Define active high microswitches
-M574 E0 S1 X1 Y1 Z1;
-M558 P1 X0 Y0 Z0 H5 F120 T5000 ; Set Z probe type to unmodulated, the axes for which it is used and the probe + travel speeds
+M574 E0 S1 X1 Y1; ; add Z1 back if removing bltouch
+M574 Z1 S2 ; Define Z to use Probe. Home to Min
 
 ; Drives
 M569 P0 S0 ; Drive 0 goes backwards
 M569 P1 S0 ; Drive 1 goes backwards
 M569 P2 S1 ; Drive 2 goes forwards
 M569 P3 S1 ; Drive 3 goes forwards
-M569 P4 S1 ; Drive 4 goes forwards
+; M569 P4 S1 ; Drive 4 goes forwards
 M350 Z16 ; Configure microstepping without interpolation
 M350 E16 X16 Y16 I1 ; Configure microstepping with interpolation for X/Y only
 
-M92 X200 Y200 Z400 E695.779:695.779 ; old E695.7790 ; old 347.8895 ; Set steps per mm
+M92 X200 Y200 Z400 E695.779 ; :695.779 ; old E695.7790 ; old 347.8895 ; Set steps per mm
 M566 X300 Y300 Z200 E100 ; Set maximum instantaneous speed changes (mm/min)
 M203 X13000 Y13000 Z1200 E200 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z150 E150 ; Set accelerations (mm/s^2)
@@ -37,7 +37,7 @@ M84 S30 ; Set idle timeout
 
 ; hotend heater config on standard therm
 M305 P1 T100000 B4719 C7.08e-8 R4700 ; Set thermistor + ADC parameters for heater 1
-M305 P2 T100000 B4719 C7.08e-8 R4700 ; Set thermistor + ADC parameters for heater 1
+; M305 P2 T100000 B4719 C7.08e-8 R4700 ; Set thermistor + ADC parameters for heater 1
 M143 S290 ; Set maximum heater temperature to 290C
 
 ; hotend heater config on pt100 channel 0
@@ -50,11 +50,11 @@ M143 H0 S201
 
 ; Tools
 M563 P0 D0 H1 ; Define tool 0
-M563 P1 D0 H1 ; Define tool 1
+; M563 P1 D0 H1 ; Define tool 1
 G10 P0 X0 Y0 ; Set tool 0 axis offsets
 G10 P0 R0 S0 ; Set initial tool 0 active and standby temperatures to 0C
-M563 P1 D1 H2 F2 ; tool 1 uses extruder drive 1 and heater 2. Fan 2 is mapped to fan 0
-G10 P1 S0 R0 X10 Y0 ; set tool 1 temperatures and offsets
+; M563 P1 D1 H2 F2 ; tool 1 uses extruder drive 1 and heater 2. Fan 2 is mapped to fan 0
+; G10 P1 S0 R0 X10 Y0 ; set tool 1 temperatures and offsets
 
 ; Network
 M550 Pcbot ; Set machine name
@@ -68,6 +68,12 @@ M552 S1
 M106 P0 S1 I0 F500 H-1 ; Set fan 0 value, PWM signal inversion and frequency. Thermostatic control is turned off - part fan
 M106 P1 S1 I0 F500 H1 T60 ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned on - e3d
 M106 P2 S0.5 I0 F500 H1 T60 S127 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
+
+; zprobe, bltouch
+M307 H3 A-1 C-1 D-1 ;
+M558 P5 X0 Y0 Z1 H5 F100 T2000
+G31 X25 Y18 Z0 P25
+M557 X5:205 Y5:165 S20 ; Define mesh grid
 
 ; Custom settings are not configured
 M107 ; start with all fans off

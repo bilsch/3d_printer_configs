@@ -5,12 +5,12 @@
 G91                    ; relative positioning
 G1 Z5 F6000 S2         ; lift Z relative to current position
 M98 Pdeployprobe.g     ; deploy mechanical Z probe
-G1 S1 X-305 Y305 F1800 ; move quickly to X or Y endstop and stop there (first pass)
+G1 S1 X-305 Y-305 F1800 ; move quickly to X or Y endstop and stop there (first pass)
 G1 S1 X-305            ; home X axis
-G1 S1 Y305             ; home Y axis
+G1 S1 Y-305             ; home Y axis
 G1 X5 Y-5 F6000        ; go back a few mm
 G1 S1 X-305 F360       ; move slowly to X axis endstop once more (second pass)
-G1 S1 Y305             ; then move slowly to Y axis endstop
+G1 S1 Y-305             ; then move slowly to Y axis endstop
 G90                    ; absolute positioning
 G1 X-10 Y-3 F6000      ; go to first bed probe point and home Z
 G30                    ; home Z by probing the bed

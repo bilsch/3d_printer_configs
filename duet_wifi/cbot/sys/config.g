@@ -15,7 +15,7 @@ M208 X0 Y0 Z0 S1 ; Set axis minima
 M208 X285 Y285 Z300 S0 ; Set axis maxima
 
 ; Endstops
-M574 X1 Y2 S1                                      ; Set active high endstops
+M574 E0 S1 X1 Y1
 
 ; Z-Probe
 M574 Z1 S2                                         ; Set endstops controlled by probe
@@ -79,7 +79,7 @@ M106 P2 S0.5 I0 F500 H1 T60 S127 ; Set fan 2 value, PWM signal inversion and fre
 ; zprobe, bltouch
 M307 H3 A-1 C-1 D-1 ;
 M558 P5 X0 Y0 Z1 H5 F100 T2000
-G31 X25 Y18 Z0 P25
+G31 X25 Y18 Z1.883 P25
 M557 X5:205 Y5:165 S20 ; Define mesh grid
 
 ; Custom settings are not configured

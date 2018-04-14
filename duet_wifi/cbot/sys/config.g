@@ -19,9 +19,10 @@ M574 E0 S1 X1 Y1
 
 ; Z-Probe
 M574 Z1 S2                                         ; Set endstops controlled by probe
-M558 P1 H5 F120 T6000                              ; Set Z probe type to unmodulated and the dive height + speeds
-G31 P25 X25 Y18 Z2.5                               ; Set Z probe trigger value, offset and trigger height
-M557 X15:270 Y15:270 S20                           ; Define mesh grid
+M557 X25:270 Y18:270 S20 ; Define mesh grid
+M307 H3 A-1 C-1 D-1              ;
+M558 P9 X0 Y0 Z1 H5 F100 T2000 A3 R0.5 S0.03 I0
+G31 X25 Y18 Z1.655 P25
 
 ; Drives
 M569 P0 S0 ; Drive 0 goes backwards
@@ -76,12 +77,7 @@ M106 P0 S1 I0 F500 H-1 ; Set fan 0 value, PWM signal inversion and frequency. Th
 M106 P1 S1 I0 F500 H1 T60 ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned on - e3d
 M106 P2 S0.5 I0 F500 H1 T60 S127 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
 
-; zprobe, bltouch
-M307 H3 A-1 C-1 D-1 ;
-M558 P5 X0 Y0 Z1 H5 F100 T2000
-G31 X25 Y18 Z1.883 P25
-M557 X5:205 Y5:165 S20 ; Define mesh grid
-
 ; Custom settings are not configured
+G29 S1 ; load mesh for printing
 M107 ; start with all fans off
 T0   ; Select first tool

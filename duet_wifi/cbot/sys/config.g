@@ -8,46 +8,58 @@ M111 S0 ; Debugging off
 G21 ; Work in millimetres
 G90 ; Send absolute coordinates...
 M83 ; ...but relative extruder moves
-M555 P2 ; Set firmware compatibility to look like Marlin
+M555 P1 ; Set firmware compatibility to look like RepRapFirmare
 
 M667 S1 ; Select CoreXY mode
-M208 X0 Y0 Z0 S1 ; Set axis minima
-M208 X285 Y285 Z300 S0 ; Set axis maxima
 
-; Endstops
-M574 E0 S1 X1 Y1
-
-; Z-Probe
-M574 Z1 S2                                         ; Set endstops controlled by probe
-M557 X25:270 Y18:270 S20 ; Define mesh grid
-M307 H3 A-1 C-1 D-1              ;
-M558 P9 X0 Y0 Z1 H5 F100 T2000 A3 R0.5 S0.03 I0
-G31 X25 Y18 Z1.655 P25
+; Network
+M550 Pcbot                            ; Set machine name
+M552 S1                                   ; Enable network
+;*** Access point is configured manually via M587
+M586 P0 S1                                ; Enable HTTP
+M586 P1 S0                                ; Disable FTP
+M586 P2 S0                                ; Disable Telnet
 
 ; Drives
 M569 P0 S0 ; Drive 0 goes backwards
 M569 P1 S0 ; Drive 1 goes backwards
 M569 P2 S1 ; Drive 2 goes forwards
 M569 P3 S1 ; Drive 3 goes forwards
-; M569 P4 S1 ; Drive 4 goes forwards
+M569 P4 S1 ; Drive 4 goes forwards
 M350 Z16 ; Configure microstepping without interpolation
 M350 E16 X16 Y16 I1 ; Configure microstepping with interpolation for X/Y only
 
-M92 X200 Y200 Z400 E695.779 ; :695.779 ; old E695.7790 ; old 347.8895 ; Set steps per mm
-M566 X300 Y300 Z200 E100 ; Set maximum instantaneous speed changes (mm/min)
-M203 X13000 Y13000 Z1200 E200 ; Set maximum speeds (mm/min)
+M92 X200 Y200 Z400 E2700:2700 ; nimble start 2700
+M566 X300 Y300 Z200 E100:100 ; Set maximum instantaneous speed changes (mm/min)
+M203 X13000 Y13000 Z1200 E200:200 ; Set maximum speeds (mm/min)
 M201 X600 Y600 Z150 E150 ; Set accelerations (mm/s^2)
-M906 X1000 Y1000 Z1900 E1000 I30 ; Set motor currents (mA) and motor idle factor in per cent
+M906 X1000 Y1000 Z1900 E1000:1000 I30 ; Set motor currents (mA) and motor idle factor in per cent
 M84 S30 ; Set idle timeout
 
-; hotend heater config on standard therm
-M305 P1 T100000 B4719 C7.08e-8 R4700 ; Set thermistor + ADC parameters for heater 1
-; M305 P2 T100000 B4719 C7.08e-8 R4700 ; Set thermistor + ADC parameters for heater 1
-M143 S290 ; Set maximum heater temperature to 290C
+; Axis Limits
+M208 X0 Y0 Z0 S1                          ; Set axis minima
+M208 X275 Y275 Z300 S0                    ; Set axis maxima
 
-; hotend heater config on pt100 channel 0
-; M143 S390 ; Set maximum heater temperature to 290C
-; M305 P1 X200
+; Endstops
+M574 E0 S1 X1 Y1 Z1
+
+; Z-Probe - adjusted for piezo
+; M574 Z1 S2                                         ; Set endstops controlled by probe
+; M557 X25:270 Y18:270 S20 ; Define mesh grid
+; M307 H3 A-1 C-1 D-1              ;
+;; M558 P1 I1 R0.4 H5 F300 A3 S0.03 X0 Y0 Z0 ; old z probe config
+; M558 P1 I1 F500 X0 Y0 Z0	;analogue piezo sensor output falls on contact, probing speed, not used to home axes
+; G31 X0 Y0 Z-1.85 P500
+
+; Z-Probe
+M558 P0 H5 F120 T6000            ; Disable Z probe but set dive height, probe speed and travel speed
+; M557 X15:260 Y15:260 S20         ; Define mesh grid
+
+; Heaters
+M305 P1 T100000 B4719 C7.08e-8 R4700      ; Set thermistor + ADC parameters for heater 1
+M143 H1 S280                              ; Set temperature limit for heater 1 to 280C
+M305 P2 T100000 B4719 C7.08e-8 R4700      ; Set thermistor + ADC parameters for heater 2
+M143 H2 S280                              ; Set temperature limit for heater 2 to 280
 
 ; bed heater config on pt100 channel 1
 M305 P0 X201
@@ -55,29 +67,22 @@ M143 H0 S201
 
 ; Tools
 M563 P0 D0 H1 ; Define tool 0
-; M563 P1 D0 H1 ; Define tool 1
 G10 P0 X0 Y0 ; Set tool 0 axis offsets
 G10 P0 R0 S0 ; Set initial tool 0 active and standby temperatures to 0C
-; M563 P1 D1 H2 F2 ; tool 1 uses extruder drive 1 and heater 2. Fan 2 is mapped to fan 0
-; G10 P1 S0 R0 X10 Y0 ; set tool 1 temperatures and offsets
+
+M563 P1 D1 H2 ; Define tool 1
+G10 P1 S0 R0 X20 Y0 ; set tool 1 temperatures and offsets
+G10 P1 R0 S0 ; Set initial tool 1 active and standby temperatures to 0C
 
 ; Automatic power saving
 M911 S10 R11 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000" ; Set voltage thresholds and actions to run on power loss
 
-; Network
-M550 Pcbot ; Set machine name
-
-; reset wifi
-M552 S0
-G4 P2000
-M552 S1
-
 ; Fans
 M106 P0 S1 I0 F500 H-1 ; Set fan 0 value, PWM signal inversion and frequency. Thermostatic control is turned off - part fan
-M106 P1 S1 I0 F500 H1 T60 ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned on - e3d
+M106 P1 S1 I0 F500 H1:2 T60 ; Set fan 1 value, PWM signal inversion and frequency. Thermostatic control is turned on - e3d ( tools 1 and 2 can trigger the fan )
 M106 P2 S0.5 I0 F500 H1 T60 S127 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
 
 ; Custom settings are not configured
-G29 S1 ; load mesh for printing
+; G29 S1 ; load mesh for printing
 M107 ; start with all fans off
 T0   ; Select first tool

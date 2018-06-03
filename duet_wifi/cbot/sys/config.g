@@ -51,9 +51,14 @@ M574 E0 S1 X1 Y1 Z1
 ; M558 P1 I1 F500 X0 Y0 Z0	;analogue piezo sensor output falls on contact, probing speed, not used to home axes
 ; G31 X0 Y0 Z-1.85 P500
 
-; Z-Probe
-M558 P0 H5 F120 T6000            ; Disable Z probe but set dive height, probe speed and travel speed
-; M557 X15:260 Y15:260 S20         ; Define mesh grid
+; Z-Probe for bltouch
+M574 Z1 S2                                         ; Set endstops controlled by probe
+M557 X10:240 Y10:240 S20         ; Define mesh grid
+M307 H3 A-1 C-1 D-1              ;
+M558 P9 X0 Y0 Z1 H5 F100 T2000 A3 R0.5 S0.05 I0
+G31 X-38 Y0 Z1.755 P25
+
+; M558 P0 H5 F120 T6000            ; Disable Z probe but set dive height, probe speed and travel speed
 
 ; Heaters
 M305 P1 T100000 B4719 C7.08e-8 R4700      ; Set thermistor + ADC parameters for heater 1
@@ -83,6 +88,6 @@ M106 P1 S1 I0 F500 H1:2 T60 ; Set fan 1 value, PWM signal inversion and frequenc
 M106 P2 S0.5 I0 F500 H1 T60 S127 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
 
 ; Custom settings are not configured
-; G29 S1 ; load mesh for printing
+G29 S1 ; load mesh for printing
 M107 ; start with all fans off
 T0   ; Select first tool

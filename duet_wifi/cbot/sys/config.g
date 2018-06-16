@@ -49,14 +49,14 @@ M574 E0 S1 X1 Y1 Z1
 ; M307 H3 A-1 C-1 D-1              ;
 ;; M558 P1 I1 R0.4 H5 F300 A3 S0.03 X0 Y0 Z0 ; old z probe config
 ; M558 P1 I1 F500 X0 Y0 Z0	;analogue piezo sensor output falls on contact, probing speed, not used to home axes
-; G31 X0 Y0 Z-1.85 P500
+; G31 X0 Y0 Z-1.63 P500
 
 ; Z-Probe for bltouch
 M574 Z1 S2                                         ; Set endstops controlled by probe
-M557 X10:240 Y10:240 S20         ; Define mesh grid
+M557 X10:240 Y10:240 S40         ; Define mesh grid
 M307 H3 A-1 C-1 D-1              ;
 M558 P9 X0 Y0 Z1 H5 F100 T2000 A3 R0.5 S0.05 I0
-G31 X-38 Y0 Z1.755 P25
+G31 X-38 Y0 Z1.63 P25
 
 ; M558 P0 H5 F120 T6000            ; Disable Z probe but set dive height, probe speed and travel speed
 

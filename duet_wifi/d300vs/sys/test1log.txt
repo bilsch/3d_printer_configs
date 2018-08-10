@@ -1,0 +1,2 @@
+2018-07-04 16:41:25 Event logging started
+2018-07-04 16:41:32 Event logging stopped

@@ -1,0 +1,5 @@
+2018-07-04 16:41:32 Event logging started
+2018-07-04 16:41:38 Event logging stopped
+power up + 00:02:52 Event logging started
+power up + 00:04:59 HTTP client 192.168.1.159 login succeeded
+2018-08-08 16:53:54 Date and time set at power up + 00:04:59

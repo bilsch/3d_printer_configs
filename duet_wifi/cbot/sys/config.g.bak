@@ -31,7 +31,7 @@ M350 E16 X16 Y16 I1 ; Configure microstepping with interpolation for X/Y only
 
 ; dual extruder setup
 M92 X200 Y200 Z400 E415:415 ; bondtech BMG with 1.8deg steppers base value
-M906 X1500 Y1500 Z2000 E700:700 I30 ; Set motor currents (mA) and motor idle factor in per cent
+M906 X1000 Y1000 Z2000 E700:700 I30 ; Set motor currents (mA) and motor idle factor in per cent
 M566 X300 Y300 Z200 E1000:1000 ; Set maximum instantaneous speed changes (mm/min)
 M203 X20000 Y20000 Z1200 E8000:8000 ; Set maximum speeds (mm/min)
 M201 X2500 Y2500 Z1000 E8000:8000 ; Set accelerations (mm/s^2)

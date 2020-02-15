@@ -36,13 +36,6 @@ M566 X300 Y300 Z200 E1000:1000 ; Set maximum instantaneous speed changes (mm/min
 M203 X20000 Y20000 Z1200 E8000:8000 ; Set maximum speeds (mm/min)
 M201 X2500 Y2500 Z1000 E8000:8000 ; Set accelerations (mm/s^2)
 
-; single extruder setup
-; M92 X200 Y200 Z400 E415 ; bondtech BMG with 1.8deg steppers base value
-; M906 X1000 Y1000 Z1800 E1000 I30 ; Set motor currents (mA) and motor idle factor in per cent
-; M566 X1000 Y1000 Z600 E1000 ; Set maximum instantaneous speed changes (mm/min)
-; M203 X20000 Y20000 Z1200 E8000 ; Set maximum speeds (mm/min)
-; M201 X2500 Y2500 Z1000 E8000 ; Set accelerations (mm/s^2)
-
 M84 S30 ; Set idle timeout
 
 ; Axis Limits
@@ -51,26 +44,6 @@ M208 X275 Y275 Z355 S0                    ; Set axis maxima
 
 ; Endstops
 M574 E0 S1 X1 Y1 Z1
-
-; Z-Probe - adjusted for piezo
-; M574 Z1 S2                                         ; Set endstops controlled by probe
-; M557 X25:270 Y18:270 S40 ; Define mesh grid
-; M307 H3 A-1 C-1 D-1              ;
-;; M558 P1 I1 R0.4 H5 F300 A3 S0.03 X0 Y0 Z0 ; old z probe config
-; M558 P1 I1 F500 X0 Y0 Z0	;analogue piezo sensor output falls on contact, probing speed, not used to home axes
-; G31 X0 Y0 Z-1.63 P500
-
-; Z-Probe for bltouch
-;M574 Z1 S2                                         ; Set endstops controlled by probe
-;M557 X10:240 Y10:240 S40         ; Define mesh grid
-;M307 H3 A-1 C-1 D-1              ;
-;M558 P9 X0 Y0 Z1 H5 F100 T2000 A3 R0.5 S0.05 I0
-; G31 X-38 Y0 Z1.663 P25
-;G31 X-38 Y0 Z1.712 P25
-
-; M558 P0 H5 F120 T6000            ; Disable Z probe but set dive height, probe speed and travel speed
-
-M558 P0 H5 F120 T6000            ; Disable Z probe but set dive height, probe speed and travel speed
 
 ; Heaters
 ; M305 P1 T100000 B4719 C7.08e-8 R4700      ; Set thermistor + ADC parameters for heater 1

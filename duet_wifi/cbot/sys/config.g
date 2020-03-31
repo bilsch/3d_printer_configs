@@ -23,17 +23,28 @@ M586 P2 S0                                ; Disable Telnet
 ; Drives
 M569 P0 S0 ; X Drive 0 goes backwards
 M569 P1 S0 ; Y Drive 1 goes backwards
-M569 P2 S1 ; Z Drive 2 goes forward
+M569 P2 S1 ; Z Drive - not used
 M569 P3 S0 ; E0 Drive 3 goes backwards
 M569 P4 S1 ; E1 Drive 4 goes forwards
+
+; Drives for z, 3 independent
+M569 P5 S1 ; left front
+M569 P6 S1 ; left back
+M569 P7 S1 ; right center
 M350 Z16 ; Configure microstepping without interpolation
 M350 E16 X16 Y16 I1 ; Configure microstepping with interpolation for X/Y only
 
+; Self Leveling configuration: (Needs to be posted before M350 microstepping)
+; -Drive Selection
+; -Leadscrews position
+M584 X0 Y1 Z5:6:7 E3:4 ; Three Z motors connected to driver outputs 5, 6 and 7
+M671 X-25:160:355 Y-5:352:-5 S10 ; leadscrews at front left, rear middle and front right - TODO: fill coordinates in
+
 ; dual extruder setup
-M92 X200 Y200 Z400 E415:415 ; bondtech BMG with 1.8deg steppers base value
-M906 X1500 Y1500 Z2000 E700:700 I30 ; Set motor currents (mA) and motor idle factor in per cent
-M566 X300 Y300 Z200 E1000:1000 ; Set maximum instantaneous speed changes (mm/min)
-M203 X20000 Y20000 Z1200 E8000:8000 ; Set maximum speeds (mm/min)
+M92 X200 Y200 Z1600 E415:415 ; bondtech BMG with 1.8deg steppers base value
+M906 X1500 Y1500 Z1600 E700:700 I30 ; Set motor currents (mA) and motor idle factor in per cent
+M566 X300 Y300 Z300 E1000:1000 ; Set maximum instantaneous speed changes (mm/min)
+M203 X20000 Y20000 Z200 E8000:8000 ; Set maximum speeds (mm/min)
 M201 X2500 Y2500 Z1000 E8000:8000 ; Set accelerations (mm/s^2)
 
 M84 S30 ; Set idle timeout
@@ -42,40 +53,44 @@ M84 S30 ; Set idle timeout
 M208 X0 Y0 Z0 S1                          ; Set axis minima
 M208 X275 Y275 Z355 S0                    ; Set axis maxima
 
+; Endstops - origonal
+; M574 E0 S1 X1 Y1
+; M574 Z1 S2 ; probe based
+
 ; Endstops
-M574 E0 S1 X1 Y1 Z1
+M574 X1 S1 P"xstop"                                ; configure active-high endstop for low end on X via pin xstop
+M574 Y1 S1 P"ystop"                                ; configure active-high endstop for low end on Y via pin ystop
+M574 Z1 S2                                         ; configure Z-probe endstop for low end on Z
+M558 H30                                           ;*** Remove this line after delta calibration has been done and new delta parameters have been saved
 
 ; Heaters
-; M305 P1 T100000 B4719 C7.08e-8 R4700      ; Set thermistor + ADC parameters for heater 1
-M143 H1 S480                              ; Set temperature limit for heater 1 to 480C
-; M305 P2 T100000 B4719 C7.08e-8 R4700      ; Set thermistor + ADC parameters for heater 2
-M143 H2 S480                              ; Set temperature limit for heater 2 to 480
-
-; pt100 channels
-M305 P1 X200 ; hotend 1 pt100 board 1 channel 1
-M305 P2 X201 ; hotend 2 pt100 board 1 channel 2
-
-; bed heater
-M305 P0 T100000 B3950 R4700              ; Set thermistor + ADC parameters for heater 0
-M143 H0 S150                             ; Set temperature limit for heater 0 to 120C
-; M305 P0 X201 ; heated bed 1 pt100 board 1 channel 2
-M143 H0 S201
-
-; Tools
-M563 P0 D0 H1 F0 ; Define tool 0
-G10 P0 X0 Y0 ; Set tool 0 axis offsets
-G10 P0 R0 S0 ; Set initial tool 0 active and standby temperatures to 0C
-
-M563 P1 D1 H2 F1 ; Define tool 1
-G10 P1 S0 R0 X20 Y0 ; set tool 1 temperatures and offsets
-G10 P1 R0 S0 ; Set initial tool 1 active and standby temperatures to 0C
-
-; Automatic power saving
-M911 S10 R11 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000" ; Set voltage thresholds and actions to run on power loss
+M308 S0 P"bedtemp" Y"thermistor" T100000 B4138     ; configure sensor 0 as thermistor on pin bedtemp
+M950 H0 C"bedheat" T0                              ; create bed heater output on bedheat and map it to sensor 0
+M143 H0 S120                                       ; set temperature limit for heater 0 to 120C
+M307 H0 B0 S1.00                                   ; disable bang-bang mode for the bed heater and set PWM limit
+M140 H0                                            ; map heated bed to heater 0
+M308 S1 P"spi.cs1" Y"rtd-max31865"                 ; configure sensor 1 as thermocouple via CS pin spi.cs1
+M950 H1 C"e0heat" T1                               ; create nozzle heater output on e0heat and map it to sensor 1
+M143 H1 S490                                       ; set temperature limit for heater 1 to 490C
+M307 H1 B0 S1.00                                   ; disable bang-bang mode for heater  and set PWM limit
+M308 S2 P"spi.cs2" Y"rtd-max31865"                 ; configure sensor 2 as thermocouple via CS pin spi.cs2
+M950 H2 C"e1heat" T2                               ; create nozzle heater output on e1heat and map it to sensor 2
+M143 H2 S490                                       ; set temperature limit for heater 2 to 490C
+M307 H2 B0 S1.00                                   ; disable bang-bang mode for heater  and set PWM limit
 
 ; Fans
-M106 P0 S1 I0 F500 H-1 ; Set fan 0 value, hotend 1 part cooling
-M106 P1 S1 I0 F500 H-1 ; Set fan 1 value, hotend 2 part cooling
+M950 F0 C"fan0" Q500                               ; create fan 0 on pin fan0 and set its frequency
+M106 P0 S0 H-1                                     ; set fan 0 value. Thermostatic control is turned off
+M950 F1 C"fan1" Q500                               ; create fan 1 on pin fan1 and set its frequency
+M106 P1 S1 H-1                                     ; set fan 1 value. Thermostatic control is turned off
+
+; Tools
+M563 P0 D0 H1 F0                                   ; define tool 0
+G10 P0 X0 Y0 Z0                                    ; set tool 0 axis offsets
+G10 P0 R0 S0                                       ; set initial tool 0 active and standby temperatures to 0C
+M563 P1 D1 H2 F1                                   ; define tool 1
+G10 P1 X0 Y0 Z0                                    ; set tool 1 axis offsets
+G10 P1 R0 S0                                       ; set initial tool 1 active and standby temperatures to 0C
 
 ; default part cooling fans to off
 M106 P0 S0
@@ -83,6 +98,18 @@ M106 P1 S0
 
 ; water pump
 M106 P2 I0 F500 H1:2 T60 ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
+
+; zprobe, piezo bed mount
+M558 P8 I1 C"^zprobe.in" H5 F120 T6000
+
+; copied from Dennis
+; Suggestions from Idris at PP, change to more senstive setting, reduce travel and speed from
+; set Z probe to digital, 2mm dive height, 0.4 sec probe recovery time
+; Z speed 8 mm/sec XY travel 100mm/min probe travel speed and set as Z endstop
+
+; Miscellaneous
+M501                                               ; load saved parameters from non-volatile memory
+M911 S10 R11 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000" ; set voltage thresholds and actions to run on power loss
 
 ; Custom settings are not configured
 ;G29 S1 ; load mesh for printing

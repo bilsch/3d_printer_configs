@@ -26,7 +26,7 @@ M569 P0 S0 ; X Drive 0 goes backwards
 M569 P1 S0 ; Y Drive 1 goes backwards
 M569 P2 S1 ; Z Drive - not used
 M569 P3 S0 ; E0 Drive 3 goes backwards
-M569 P4 S1 ; E1 Drive 4 goes forwards
+; M569 P4 S1 ; E1 Drive 4 goes forwards
 
 ; Drives for z, 3 independent
 M569 P5 S1 ; left front
@@ -38,36 +38,31 @@ M350 E16 X16 Y16 I1 ; Configure microstepping with interpolation for X/Y only
 ; Self Leveling configuration: (Needs to be posted before M350 microstepping)
 ; -Drive Selection
 ; -Leadscrews position
-M584 X0 Y1 Z5:6:7 E3:4 ; Three Z motors connected to driver outputs 5, 6 and 7
-; M671 X-15.0:100.0:215.0 Y220.0:-20.0:220.0 ; Z leadscrews are at (-15,220), (100,-20) and (215,220)
-M671 X-25:15:265 Y-25:265:145 S10 ; leadscrews at front left, rear left and front middle - TODO: fill coordinates in
+M584 X0 Y1 Z5:6:7 E3 ; Three Z motors connected to driver outputs 5, 6 and 7
+M671 X0:145:295 Y145:295:145 S10 ; leadscrews at front left, rear left and front middle
 
-; dual extruder setup
-M92 X200 Y200 Z1600 E415:415 ; bondtech BMG with 1.8deg steppers base value
-M906 X1500 Y1500 Z1600 E700:700 I30 ; Set motor currents (mA) and motor idle factor in per cent
-M566 X600 Y600 Z150 E600:600 ; Set maximum instantaneous speed changes (mm/min)
-M203 X18000 Y18000 Z200 E2280:2280 ; Set maximum speeds (mm/min) 2280 is volcano v6 is 900
-M201 X1500 Y1500 Z1000 E600:1000 ; Set accelerations (mm/s^2)
-
+; steps and speeds/feeds
+M92 X200 Y200 Z1600 E415 I1 ; bondtech BMG with 1.8deg steppers base value
+M906 X1500 Y1500 Z1600 E700 I30 ; Set motor currents (mA) and motor idle factor in per cent
+M566 X600 Y600 Z150 E300 ; Set maximum instantaneous speed changes (mm/min)
+M203 X18000 Y18000 Z200 E1600 ; Set maximum speeds (mm/min) 2280 is volcano v6 is 900
+M201 X1500 Y1500 Z1000 E800 ; Set accelerations (mm/s^2)
 M84 S30 ; Set idle timeout
 
 ; Axis Limits
 M208 X0 Y0 Z0 S1                          ; Set axis minima
-M208 X285 Y285 Z300 S0                    ; Set axis maxima
-
-; Endstops - origonal
-; M574 E0 S1 X1 Y1
-; M574 Z1 S2 ; probe based
+M208 X290 Y290 Z300 S0                    ; Set axis maxima
 
 ; Endstops
 M574 X1 S1 P"xstop"                                ; configure active-high endstop for low end on X via pin xstop
 M574 Y1 S1 P"ystop"                                ; configure active-high endstop for low end on Y via pin ystop
-M574 Z1 S1 P"zstop"                                ; configure active-high endstop for low end on z via pin zstop
-; M574 Z1 S2                                         ; configure Z-probe endstop for low end on Z
-; M558 H30                                           ;*** Remove this line after delta calibration has been done and new delta parameters have been saved
+; M574 Z1 S1 P"zstop"                                ; configure active-high endstop for low end on z via pin zstop
+M574 Z1 S2                                         ; configure Z-probe endstop for low end on Z
 
-; zprobe sensitivity / offsets - this needs to be after M558!
-; G31 Z-0.143
+; Z-Probe
+M558 P1 C"zprobe.in" H5 F120 T6000             ; set Z probe type to unmodulated and the dive height + speeds
+G31 P500 X0 Y0 Z1.41                           ; set Z probe trigger value, offset and trigger height
+
 
 ; Heaters
 M308 S0 P"bedtemp" Y"thermistor" T100000 B4138     ; configure sensor 0 as thermistor on pin bedtemp
@@ -79,40 +74,45 @@ M308 S1 P"spi.cs1" Y"rtd-max31865"                 ; configure sensor 1 as therm
 M950 H1 C"e0heat" T1                               ; create nozzle heater output on e0heat and map it to sensor 1
 M143 H1 S490                                       ; set temperature limit for heater 1 to 490C
 M307 H1 B0 S1.00                                   ; disable bang-bang mode for heater  and set PWM limit
-M308 S2 P"spi.cs2" Y"rtd-max31865"                 ; configure sensor 2 as thermocouple via CS pin spi.cs2
-M950 H2 C"e1heat" T2                               ; create nozzle heater output on e1heat and map it to sensor 2
-M143 H2 S490                                       ; set temperature limit for heater 2 to 490C
-M307 H2 B0 S1.00                                   ; disable bang-bang mode for heater  and set PWM limit
+
 
 ; Fans
-M950 F0 C"duex.fan4" Q500                               ; create fan 0 on pin fan0 and set its frequency
-M106 P0 S0 H-1                                     ; set fan 0 value. Thermostatic control is turned off
-M950 F1 C"duex.fan5" Q500                               ; create fan 1 on pin fan1 and set its frequency
-M106 P1 S1 H-1                                     ; set fan 1 value. Thermostatic control is turned off
-M950 F2 C"duex.fan3" Q500                          ; create fan 2 on pin fan3 and set its frequency
-M106 P2 H1:2 T45:60                                ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
+; M950 F0 C"duex.fan4" Q500                          ; create fan 0 on pin fan0 and set its frequency
+; M106 P0 S0 H-1 C"Tool 1 part fan"                  ; set fan 0 value. Thermostatic control is turned off
+; M950 F1 C"duex.fan5" Q500                        ; create fan 1 on pin fan1 and set its frequency
+; M106 P1 S1 H-1 C"Tool 2 part fan"                ; set fan 1 value. Thermostatic control is turned off
+
+
+; M950 F0 C"fan0" Q500                         ; create fan 1 on pin fan1 and set its frequency
+; M106 P0 C"Hotend fan" S1 H1 T45:60                               ; set fan 1 value. Thermostatic control is turned on
+
+M950 F0 C"fan0" Q500                          ; create fan 2 on pin fan3 and set its frequency
+M106 P0 C"Hotend fan" S1 H1 T45:60            ; Set fan 2 value, PWM signal inversion and frequency. Thermostatic control is turned on - duet
+
+M950 F1 C"fan1" Q500                   ; create fan 1 on pin fan1 and set its frequency
+M106 P1 C"Part cooling fan" S1 H-1                                     ; set fan 1 value. Thermostatic control is turned off
 
 M950 F3 C"duex.fan6" Q500                          ; create fan 3 on pin fan4 and set its frequency. Note this is an LED to light up the work space
-M106 P3 S0 H-1                                     ; Set fan 3 value, PWM signal inversion and frequency. Thermostatic control is turned off
+M106 P3 S0 H-1 C"LED"                              ; Set fan 3 value, PWM signal inversion and frequency. Thermostatic control is turned off
 
 ; Tools
 M563 P0 D0 H1 F0                                   ; define tool 0
 G10 P0 X0 Y0 Z0                                    ; set tool 0 axis offsets
 G10 P0 R0 S0                                       ; set initial tool 0 active and standby temperatures to 0C
-M563 P1 D1 H2 F1                                   ; define tool 1
-G10 P1 X0 Y0 Z0                                    ; set tool 1 axis offsets
-G10 P1 R0 S0                                       ; set initial tool 1 active and standby temperatures to 0C
+; M563 P1 D1 H2 F1                                   ; define tool 1
+; G10 P1 X0 Y0 Z0                                    ; set tool 1 axis offsets
+; G10 P1 R0 S0                                       ; set initial tool 1 active and standby temperatures to 0C
 
-; zprobe, piezo bed mount
-; M558 P8 I0 C"^zprobe.in" H5 F220 T6000
+; zprobe, mini-ir probe
+; still need to run https://duet3d.dozuki.com/Wiki/Test_and_calibrate_the_Z_probe
+; M558 P1 C"^zprobe.in" H5 F100 T2000
+; M558 H30                                           ;*** Remove this line after delta calibration has been done and new delta parameters have been saved
 
-; copied from Dennis
-; Suggestions from Idris at PP, change to more senstive setting, reduce travel and speed from
-; set Z probe to digital, 2mm dive height, 0.4 sec probe recovery time
-; Z speed 8 mm/sec XY travel 100mm/min probe travel speed and set as Z endstop
+; zprobe sensitivity / offsets - this needs to be after M558!
+; G31 Z1.41 
+; G31 X0 Y0
 
 ; Miscellaneous
-M501                                               ; load saved parameters from non-volatile memory
 M911 S10 R11 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000" ; set voltage thresholds and actions to run on power loss
 
 ; Custom settings are not configured
@@ -125,7 +125,7 @@ M106 P0 S0
 M106 P1 S0
 
 ; default pump and LED to off as well
-M106 P2 S0
+; M106 P2 S0
 M106 P3 S0
 
 ; pressure advance tinkering - dummy values

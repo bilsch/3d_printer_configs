@@ -10,17 +10,17 @@ M550 P"Voron"                                   	; set printer name
 M669 K1                                            	; select CoreXY mode
 
 ; Network - using pi
-M552 P0.0.0.0 S0                                   	; enable network and acquire dynamic address via DHCP
-M586 P0 S0                                          ; enable HTTP
-M586 P1 S0                                         	; disable FTP
-M586 P2 T1 S0                                      	; disable Telnet
+; M552 P0.0.0.0 S0                                   	; enable network and acquire dynamic address via DHCP
+; M586 P0 S0                                          ; enable HTTP
+; M586 P1 S0                                         	; disable FTP
+; M586 P2 T1 S0                                      	; disable Telnet
 
 ; Wait a bit so boards can sync up
 G4 S5
 
 ; Drives for XY
-M569 P0.4 S0                                       	; A motor 
-M569 P0.5 S1                                       	; B motor
+M569 P0.4 S1                                       	; A motor 
+M569 P0.5 S0                                       	; B motor
 
 ; Drives for Z
 M569 P0.2 S1                                       	; Front left 
@@ -28,8 +28,8 @@ M569 P0.1 S0                                       	; Back left
 M569 P0.0 S1                                       	; Back right
 M569 P0.3 S1                                       	; Front right
 
-; Drive for extruder, 1lc
-M569 P1.0 S1                                   ; physical drive 121.0 goes forwards
+; Drive for extruder, 3hc
+M569 P1.0 S1                                   ; physical drive 1.0 goes forwards
 
 ; Drive mappings 
 M584 X0.4 Y0.5 Z0.0:0.1:0.2:0.3 E1.0               	; set drive mapping
@@ -45,8 +45,8 @@ M906 X2000 Y2000 Z2000 E1600 I60                	; set motor currents (mA) and m
 M84 S30  
 
 ; Axis Limits
-M208 X301 Y305 Z265 S0                             	; set axis maxima
-M208 X1 Y0 Z0 S1                                   	; set axis minima
+M208 X305 Y305 Z265 S0                             	; set axis maxima
+M208 X0 Y0 Z0 S1                                   	; set axis minima
 
 ; Endstops
 M574 X2 S1 P"io3.in"                               ; microswitch
@@ -80,8 +80,8 @@ M950 H1 C"1.out0" T1                              ; create nozzle heater output 
 M307 H1 R2.921 C156.5 D5.20 S1.00 V24.0					 
 
 ; DHT22 sensor
-M308 S10 P"0.spi.cs1" Y"dht22"       A"Chamber Temp"    ; Temperature (connected to cs0 port on the temp daughterboard slot
-M308 S11 P"S10.1"     Y"dhthumidity" A"Chamber Hum[%]"  ; Humidity
+; M308 S10 P"0.spi.cs1" Y"dht22"       A"Chamber Temp"    ; Temperature (connected to cs0 port on the temp daughterboard slot
+; M308 S11 P"S10.1"     Y"dhthumidity" A"Chamber Hum[%]"  ; Humidity
 
 ; Main fans
 M950 F0 C"1.out1" Q500                         ; create fan 0 on pin 121.out1 and set its frequency
@@ -90,19 +90,19 @@ M950 F1 C"1.out2" Q500                         ; create fan 1 on pin 121.out2 an
 M106 P1 S1 H1 T45                                ; set fan 1 value. Thermostatic control is turned on
 
 ; Aux fans (option to control daughter board fans based on main board temp sensor coming in RRF3.3, for now has to be manual)
-M950 F2 C"out8" Q500                              ; Electronics compartment fan 1
-M106 P2 S1 H0 T45 C"Electronics Fan 1"				; Default off; thermistatic control on above 45C 
-M950 F3 C"out9" Q500                              ; Electronics compartment fan 2
-M106 P3 S1 H0 T45 C"Electronics Fan 2"				; Default off; thermistatic control on above 45C 
+; M950 F2 C"out8" Q500                              ; Electronics compartment fan 1
+; M106 P2 S1 H0 T45 C"Electronics Fan 1"				; Default off; thermistatic control on above 45C 
+; M950 F3 C"out9" Q500                              ; Electronics compartment fan 2
+; M106 P3 S1 H0 T45 C"Electronics Fan 2"				; Default off; thermistatic control on above 45C 
 
-M950 F4 C"!out4+out4.tach"							; Noctua exhaust filter fan
-M106 P4 S0 H-1 C"Exhaust Fan"						; Default off 
+; M950 F4 C"!out4+out4.tach"							; Noctua exhaust filter fan
+; M106 P4 S0 H-1 C"Exhaust Fan"						; Default off 
 
-M950 F7 C"out5+out5.tach" Q500                      ; Electronics compartment fan 1
-M106 P7 S0 H-1 C"Nevermore"				; Default off; thermistatic control on above 45C 
+; M950 F7 C"out5+out5.tach" Q500                      ; Electronics compartment fan 1
+; M106 P7 S0 H-1 C"Nevermore"				; Default off; thermistatic control on above 45C 
 
 ; Tools
-M563 P0 S"HottyMcHotend" D0 H1 F0                ; define tool 0
+M563 P0 S"v6" D0 H1 F0                ; define tool 0
 G10 P0 X0 Y0 Z0                                    	; set tool 0 axis offsets
 G10 P0 R0 S0                                       	; set initial tool 0 active and standby temperatures to 0C
 
@@ -116,17 +116,19 @@ M106 F5 S0 H-1 C"Light"
 M581 P6 T6											; When pushed - trigger relay switch on io6.out
 
 ; Custom settings are not defined
-M593 F37.3											; DAA 
+; M593 F37.3											; DAA 
 
 ; Calibration of the MCU temp sensor
-M912 P0 S-9.2
+; M912 P0 S-9.2
 
 ; Miscellaneous
 M911 S22 R23 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000" 	; set voltage thresholds and actions to run on power loss
 M575 P1 S1 B57600                            		; enable support for PanelDue
 
 ; auto select t0 since we only have 1!
-T0
+M107 ; start with all fans off
+T0   ; Select first tool
+
 ; Prepare global vars for print macros
 ;global bed_temp = 0
 ;global hotend_temp = 0

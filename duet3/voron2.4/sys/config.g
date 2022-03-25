@@ -45,8 +45,8 @@ M906 X2000 Y2000 Z2000 E1600 I60                	; set motor currents (mA) and m
 M84 S30  
 
 ; Axis Limits
-M208 X305 Y305 Z265 S0                             	; set axis maxima
-M208 X0 Y0 Z0 S1                                   	; set axis minima
+M208 X0:305 Y0:305
+M208 Z0:265
 
 ; Endstops
 M574 X2 S1 P"io3.in"                               ; microswitch
@@ -76,8 +76,9 @@ M570 H0 T3											; Start screaming if temp falls 3C below set temp.
 M308 S1 P"1.temp0" Y"pt1000"                      ; configure sensor temp0 as pt1000 on pin 121.temp0
 M950 H1 C"1.out0" T1                              ; create nozzle heater output on 121.out0 and map it to sensor 1
 
-; Mosquitto
-M307 H1 R2.921 C156.5 D5.20 S1.00 V24.0					 
+; e3d v6
+; need to run pid tuning some day
+; M307 H1 R2.921 C156.5 D5.20 S1.00 V24.0					 
 
 ; DHT22 sensor
 ; M308 S10 P"0.spi.cs1" Y"dht22"       A"Chamber Temp"    ; Temperature (connected to cs0 port on the temp daughterboard slot
@@ -89,37 +90,12 @@ M106 P0 S0 H-1                                   ; set fan 0 value. Thermostatic
 M950 F1 C"1.out2" Q500                         ; create fan 1 on pin 121.out2 and set its frequency
 M106 P1 S1 H1 T45                                ; set fan 1 value. Thermostatic control is turned on
 
-; Aux fans (option to control daughter board fans based on main board temp sensor coming in RRF3.3, for now has to be manual)
-; M950 F2 C"out8" Q500                              ; Electronics compartment fan 1
-; M106 P2 S1 H0 T45 C"Electronics Fan 1"				; Default off; thermistatic control on above 45C 
-; M950 F3 C"out9" Q500                              ; Electronics compartment fan 2
-; M106 P3 S1 H0 T45 C"Electronics Fan 2"				; Default off; thermistatic control on above 45C 
-
-; M950 F4 C"!out4+out4.tach"							; Noctua exhaust filter fan
-; M106 P4 S0 H-1 C"Exhaust Fan"						; Default off 
-
-; M950 F7 C"out5+out5.tach" Q500                      ; Electronics compartment fan 1
-; M106 P7 S0 H-1 C"Nevermore"				; Default off; thermistatic control on above 45C 
-
 ; Tools
 M563 P0 S"v6" D0 H1 F0                ; define tool 0
 G10 P0 X0 Y0 Z0                                    	; set tool 0 axis offsets
 G10 P0 R0 S0                                       	; set initial tool 0 active and standby temperatures to 0C
 
 ; Push buttons and their config
-M950 J5 C"io5.in" 									; Left button - light
-M581 P5 T5 											; when button pushed, execute trigger5.g
-
-M950 J6 C"io7.in"  									; Left button - heat up
-M950 F5 C"io6.out"									; configure the relay as fan
-M106 F5 S0 H-1 C"Light"
-M581 P6 T6											; When pushed - trigger relay switch on io6.out
-
-; Custom settings are not defined
-; M593 F37.3											; DAA 
-
-; Calibration of the MCU temp sensor
-; M912 P0 S-9.2
 
 ; Miscellaneous
 M911 S22 R23 P"M913 X0 Y0 G91 M83 G1 Z3 E-5 F1000" 	; set voltage thresholds and actions to run on power loss

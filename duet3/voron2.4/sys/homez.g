@@ -7,7 +7,8 @@
 
 
 if !move.axes[0].homed || !move.axes[1].homed     ; If the printer hasn't been homed, home it
-   M98 P"0:/sys/homexy.g"  
+   M98 P"0:/sys/homex.g"  
+   M98 P"0:/sys/homey.g"  
 M561                                            ; clear any bed transform
 M290 S0 R0                                      ; clear baby steps 
 G91                                             ; relative positioning

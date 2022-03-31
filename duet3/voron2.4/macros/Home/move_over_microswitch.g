@@ -1,1 +1,1 @@
-G1 X207 Y304 F6000	; move above the endstop switch
+G1 X200 Y294 F3000	; move above the endstop switch

@@ -36,7 +36,7 @@ M584 X0.4 Y0.5 Z0.0:0.1:0.2:0.3 E1.0               	; set drive mapping
 
 ; General drive config like speeds, accel, jerk, etc
 M350 X16 Y16 Z16:16:16:16 E16 I1                   	; configure microstepping with interpolation
-M92 X80.00 Y80.00 Z800.00 E410.00         			; set steps per mm
+M92 X160.00 Y160.00 Z800.00 E410.00         			; set steps per mm
 M566 X600.00 Y600.00 Z60.00 E8000.00       			; set maximum instantaneous speed changes (mm/min)
 M203 X18000.00 Y18000.00 Z3000 E15000		       	; set maximum speeds (mm/min)
 M201 X1500.00 Y1500.00 Z350.00 E1800.00    			; set accelerations (mm/s^2)
@@ -45,7 +45,7 @@ M906 X2000 Y2000 Z2000 E1600 I60                	; set motor currents (mA) and m
 M84 S30  
 
 ; Axis Limits
-M208 X0:305 Y0:305
+M208 X0:295 Y0:295 ; We can make this better by lowering the probe doc but f that for now
 M208 Z0:265
 
 ; Endstops
@@ -54,6 +54,7 @@ M574 Y2 S1 P"io4.in"                               ; microswitch
 M574 Z0 P"nil" 										; No endstop
 
 ; Z microswitch
+; Coords X200 Y294
 M558 K1 P8 C"io8.in" I1 H2 F350:60 T18000 A10 S0.01 R0.2 ; set Z probe type to switch and the dive height + speeds
 G31 K1 P500 X0 Y0 Z-0.17                          ; set Z probe trigger value, offset and trigger height -0.8
 
@@ -67,7 +68,7 @@ M557 X15:285 Y25:275 S40                           	; define mesh grid
 ; Hotbed
 M308 S0 P"temp0" Y"thermistor" T100000 B4138       	; Thermistor
 M950 H0 C"out9" T0                                 	; Heater
-M307 H0 R0.799 C380.0 D4.51 S0.60 V24.0					; Heater 0 model for 3.x
+M307 H0 R0.799 C380.0 D4.51 S0.60 V24.0				; Heater 0 model for 3.x
 M140 H0                                            	; Map heated bed to heater 0
 M143 H0 S120                                       	; Set temperature limit for heater 0 to 120C
 M570 H0 T3											; Start screaming if temp falls 3C below set temp. 

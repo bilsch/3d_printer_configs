@@ -6,7 +6,8 @@ M561 ; clear any bed transform
 
 ; Home, but only if homing is needed
 if !move.axes[0].homed || !move.axes[1].homed || !move.axes[2].homed
-  G28
+  M98 P"0:/sys/homey.g"                         ; home x y
+  M98 P"0:/sys/homey.g"                         ; home x y
 
 M98 P"/macros/Home/z_current_low.g"
 
@@ -42,7 +43,7 @@ echo "Auto calibration successful, deviation", move.calibration.initial.deviatio
 M98 P"/macros/Home/z_current_high.g"
 
 ; Perform nozzle cleaning
-M98 P"/macros/Maintenance/nozzle_brush.g"
+; M98 P"/macros/Maintenance/nozzle_brush.g"
 
 ; rehome z
 G28 Z

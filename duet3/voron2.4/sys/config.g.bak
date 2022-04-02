@@ -38,10 +38,10 @@ M584 X0.4 Y0.5 Z0.0:0.1:0.2:0.3 E1.0               	; set drive mapping
 M350 X16 Y16 Z16:16:16:16 E16 I1                   	; configure microstepping with interpolation
 M92 X160.00 Y160.00 Z800.00 E410.00         			; set steps per mm
 M566 X600.00 Y600.00 Z60.00 E8000.00       			; set maximum instantaneous speed changes (mm/min)
-M203 X18000.00 Y18000.00 Z3000 E15000		       	; set maximum speeds (mm/min)
-M201 X1500.00 Y1500.00 Z350.00 E1800.00    			; set accelerations (mm/s^2)
-M204 P1500 T2000									; set printing acceleration and travel acceleration
-M906 X2000 Y2000 Z2000 E1600 I60                	; set motor currents (mA) and motor idle factor in per cent
+M203 X10000.00 Y10000.00 Z3000 E2000		       	; set maximum speeds (mm/min)
+M201 X1000.00 Y1000.00 Z350.00 E1800.00    			; set accelerations (mm/s^2)
+M204 P750 T750									; set printing acceleration and travel acceleration
+M906 X2000 Y2000 Z2000 E850 I60                	; set motor currents (mA) and motor idle factor in per cent
 M84 S30  
 
 ; Axis Limits
@@ -54,15 +54,16 @@ M574 Y2 S1 P"io4.in"                               ; microswitch
 M574 Z0 P"nil" 										; No endstop
 
 ; Z microswitch
+; Coords X200 Y294
 M558 K1 P8 C"io8.in" I1 H2 F350:60 T18000 A10 S0.01 R0.2 ; set Z probe type to switch and the dive height + speeds
-G31 K1 P500 X0 Y0 Z-0.17                          ; set Z probe trigger value, offset and trigger height -0.8
+G31 K1 P500 X0 Y0 Z2                          ; set Z probe trigger value, offset and trigger height -0.8
 
-; Z-Probe
+; Euclid Z-Probe
 M558 K0 P8 C"io7.in" I1 H5 F350:120 T18000 A5 S0.01 R0.2  ; set Z probe type to switch and the dive height + speeds
-G31 K0 P500 X0 Y25 Z1.98                               ; set Z probe trigger value, offset and trigger height
+G31 K0 P500 X0 Y0                                         ; set Z probe trigger value, offset and trigger height
 
-M671 X354:354:-53:-53 Y0:370:370:0 S20        	 	; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
-M557 X15:285 Y25:275 S40                           	; define mesh grid
+; M671 X354:354:-53:-53 Y0:370:370:0 S20        	 	; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
+M557 X0:285 Y0:255 S50                           	; define mesh grid
 
 ; Hotbed
 M308 S0 P"temp0" Y"thermistor" T100000 B4138       	; Thermistor

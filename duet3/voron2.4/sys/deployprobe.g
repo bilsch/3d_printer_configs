@@ -47,7 +47,7 @@ M564 H1 S0                    ; Allow movement BEYOND axes boundaries (for Y to 
 
 G91                           ; relative positioning
 echo "Lift Z in advance of deploy" 
-G1 H2 Z15 F3000               ; move Z 15 for clearance above dock.
+G1 H2 Z10 F3000               ; move Z 15 for clearance above dock.
 ;                             ; need to figure out some safety check on this
 G90                           ; absolute positioning
 
@@ -69,7 +69,7 @@ echo "Passed first logic test to deploy probe"
 G0 X60 Y292              ; move to Preflight Position
 M400                          ; wait for moves to finish
 G91                           ; realtive coordiantes
-G1 H2 Z-15                       ; recover the z clearance
+G1 H2 Z-10                       ; recover the z clearance
 
 echo "Probe Pickup while loop running"
 
@@ -89,7 +89,7 @@ while sensors.probes[0].value[0]=1000
   G90                         ; absolute coordinates
   ; echo sensors.probes[0].value[0]
   ; echo iterations
-  if iterations=1000           ; if probe has moved 100*step increment without pickup detection, exit loop
+  if iterations=500           ; if probe has moved 100*step increment without pickup detection, exit loop
      abort "Failed to pick up Probe after 100 iterations.  Sanity check things and try again"
      break
 
@@ -101,11 +101,10 @@ M400
 G4 P250                       ; pause 1 seconds
 
 G91                         ; realtive coordiantes
+G1 H2 Z15 F1500              ; jog bed up 0.25mm change to suit user preference
 if sensors.probes[0].value[0]=0;
     echo "probe pickup successful"
-    G1 H2 Z15 F1500              ; jog bed up 0.25mm change to suit user preference
 else
-    G1 H2 Z15 F1500              ; jog bed up 0.25mm change to suit user preference
     abort "probe pickup appears to have failed - did it fall off?"
 
 G90                           ; absolute positioning

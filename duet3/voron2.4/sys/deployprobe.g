@@ -47,7 +47,7 @@ M564 H1 S0                    ; Allow movement BEYOND axes boundaries (for Y to 
 
 G91                           ; relative positioning
 echo "Lift Z in advance of deploy" 
-G1 H2 Z10 F3000               ; move Z 15 for clearance above dock.
+G1 H2 Z20 F3000               ; move Z for clearance above dock.
 ;                             ; need to figure out some safety check on this
 G90                           ; absolute positioning
 
@@ -62,14 +62,12 @@ if sensors.probes[0].value[0]!=1000    ; if sensor is value other than 1000 do t
 ; if we're here we know it's becasue the above is true which I assume is because you have an NC switch as a probe.
 echo "Passed first logic test to deploy probe"
 
-; Dock side position is at X0 Y30
-; Docked probe postion is at X0 Y0 
-; Dock exit point is at X65 Y0 
+;; note this just moves right over the probe and drops z to pick it up
 
-G0 X60 Y292              ; move to Preflight Position
+G0 X22 Y295              ; move to Preflight Position
 M400                          ; wait for moves to finish
 G91                           ; realtive coordiantes
-G1 H2 Z-10                       ; recover the z clearance
+; G1 H2 Z-20                       ; recover the z clearance
 
 echo "Probe Pickup while loop running"
 
@@ -77,7 +75,7 @@ echo "Probe Pickup while loop running"
 echo "Object Model Deployuser token (before while loop) = " ^sensors.probes[0].deployedByUser
 
 G90                           ; absolute coordinates
-G1 X20 Y292 F3000                ; move over dock
+G1 X22 Y295 F3000                ; move over dock
 G4 S1                         ; pause for pickup 
 M400                          ; wait for moves to finish
 
@@ -89,7 +87,7 @@ while sensors.probes[0].value[0]=1000
   G90                         ; absolute coordinates
   ; echo sensors.probes[0].value[0]
   ; echo iterations
-  if iterations=500           ; if probe has moved 100*step increment without pickup detection, exit loop
+  if iterations=400           ; if probe has moved 100*step increment without pickup detection, exit loop
      abort "Failed to pick up Probe after 100 iterations.  Sanity check things and try again"
      break
 
@@ -101,14 +99,14 @@ M400
 G4 P250                       ; pause 1 seconds
 
 G91                         ; realtive coordiantes
-G1 H2 Z15 F1500              ; jog bed up 0.25mm change to suit user preference
+G1 H2 Z18 F1500              ; jog bed up 0.25mm change to suit user preference
 if sensors.probes[0].value[0]=0;
     echo "probe pickup successful"
 else
     abort "probe pickup appears to have failed - did it fall off?"
 
 G90                           ; absolute positioning
-G1 X150 Y180 F3000        ; move bed to clear probe from build surface 
+G1 X145 Y140 F3000        ; move bed to clear probe from build surface 
 M400                          ; wait for moves to finish
 
 M564 H1 S1                    ; Restrict movement to within axes boundaries (for normal Y movement)

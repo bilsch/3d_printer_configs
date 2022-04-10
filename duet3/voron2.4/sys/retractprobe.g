@@ -28,13 +28,13 @@ echo "pass first logic loop"
 ; echo "Probe Value =" ^sensors.probes[0].value[0]
 ; echo "Object Model Deployuser token =" ^sensors.probes[0].deployedByUser
 
-G1 X60 Y292 Z10 F3000         ; move to ready position 
-G1 Z-3 F3000                  ; drop down for dock
+G1 X60 Y295 Z10 F3000         ; move to ready position 
+G1 Z5.5 F3000                  ; drop down for dock - note this value comes *after* you figure out your probe offset
 G4 P4000
-G1 X20 Y292 Z-6.25 F3000          ; move into the dock position
-G4 P4000                       ; pause 250 usecs 
-G1 X20 Y260 Z-6.25 F3000         ; move to the side adjacent to the dock swiping the probe off
-G1 Z20 F3000
+G1 X22 Y295 F3000          ; move into the dock position
+G1 Z30 F3000 ; lift to detach euclid
+G1 Y200 ;  just get out of the way
+G1 X200 ; so we don't yank the probe back out
 M400
 
 if sensors.probes[0].value[0]!= 1000

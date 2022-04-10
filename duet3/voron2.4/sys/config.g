@@ -9,6 +9,7 @@ M83                                                 ; ...but relative extruder m
 M550 P"Voron"                                   	; set printer name
 M669 K1                                            	; select CoreXY mode
 
+
 ; Network - using pi
 ; M552 P0.0.0.0 S0                                   	; enable network and acquire dynamic address via DHCP
 ; M586 P0 S0                                          ; enable HTTP
@@ -22,17 +23,17 @@ G4 S5
 M569 P0.4 S1                                       	; A motor 
 M569 P0.5 S0                                       	; B motor
 
-; Drives for Z
+; Drives for Z - verified locations
 M569 P0.2 S1                                       	; Front left 
 M569 P0.1 S0                                       	; Back left
 M569 P0.0 S1                                       	; Back right
 M569 P0.3 S1                                       	; Front right
 
 ; Drive for extruder, 3hc
-M569 P1.0 S1                                   ; physical drive 1.0 goes forwards
+M569 P1.0 S0
 
 ; Drive mappings 
-M584 X0.4 Y0.5 Z0.0:0.1:0.2:0.3 E1.0               	; set drive mapping
+M584 X0.4 Y0.5 Z0.2:0.1:0.0:0.3 E1.0               	; set drive mapping
 
 ; General drive config like speeds, accel, jerk, etc
 M350 X16 Y16 Z16:16:16:16 E16 I1                   	; configure microstepping with interpolation
@@ -45,8 +46,8 @@ M906 X2000 Y2000 Z2000 E850 I60                	; set motor currents (mA) and mo
 M84 S30  
 
 ; Axis Limits
-M208 X0:295 Y0:295 ; We can make this better by lowering the probe doc but f that for now
-M208 Z0:265
+M208 X0:298 Y0:298 ; We can make this better by lowering the probe doc but f that for now
+M208 Z-10:265
 
 ; Endstops
 M574 X2 S1 P"io3.in"                               ; microswitch
@@ -55,15 +56,24 @@ M574 Z0 P"nil" 										; No endstop
 
 ; Z microswitch
 ; Coords X200 Y294
+; coords to the euclid are referencing this probe
 M558 K1 P8 C"io8.in" I1 H2 F350:60 T18000 A10 S0.01 R0.2 ; set Z probe type to switch and the dive height + speeds
-G31 K1 P500 X0 Y0 Z2                          ; set Z probe trigger value, offset and trigger height -0.8
+G31 K1 P500 X0 Y0 Z0                          ; set Z probe trigger value, offset and trigger height -0.8
 
 ; Euclid Z-Probe
+; note euclid probe hangs down from the tool carriage
+; The trigger height here is used to set z=0 later ;)
 M558 K0 P8 C"io7.in" I1 H5 F350:120 T18000 A5 S0.01 R0.2  ; set Z probe type to switch and the dive height + speeds
-G31 K0 P500 X0 Y0                                         ; set Z probe trigger value, offset and trigger height
+; TODO: 1) 9.45 was off by about .55 earlier but hotend not tightened
+;       2) we still need to ensure the z pole coords are right, should be the same gauge feel across the board. Not done yet
 
-M671 X354:354:-53:-53 Y0:370:370:0 S20        	 	; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
-M557 X0:285 Y0:255 S50                           	; define mesh grid
+G31 K0 P500 X0 Y0 Z9.45                                   ; set Z probe trigger value, offset and trigger height
+
+; Belt Locations
+M671 X-65:-65:365:365 Y0:395:395:0 S20      ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
+											; Position of the bed leadscrews.. 4 Coordinates
+											; Snn Maximum correction to apply to each leadscrew in mm (optional, default 1.0); M557 X0:285 Y0:255 S50                           	; define mesh grid
+M557 X30:280 Y30:280 P3                     ; define mesh grid, probe 4 points
 
 ; Hotbed
 M308 S0 P"temp0" Y"thermistor" T100000 B4138       	; Thermistor
@@ -86,10 +96,10 @@ M950 H1 C"1.out0" T1                              ; create nozzle heater output 
 ; M308 S11 P"S10.1"     Y"dhthumidity" A"Chamber Hum[%]"  ; Humidity
 
 ; Main fans
-M950 F0 C"1.out1" Q500                         ; create fan 0 on pin 121.out1 and set its frequency
+M950 F0 C"1.out6" Q500                         ; create fan 0 on pin 121.out1 and set its frequency
 M106 P0 S0 H-1                                   ; set fan 0 value. Thermostatic control is turned off
-M950 F1 C"1.out2" Q500                         ; create fan 1 on pin 121.out2 and set its frequency
-M106 P1 S1 H1 T45                                ; set fan 1 value. Thermostatic control is turned on
+M950 F1 C"1.out7" Q500                         ; create fan 1 on pin 121.out2 and set its frequency
+M106 P1 S1 H1 T60                                ; set fan 1 value. Thermostatic control is turned on
 
 ; Tools
 M563 P0 S"v6" D0 H1 F0                ; define tool 0
@@ -105,6 +115,10 @@ M575 P1 S1 B57600                            		; enable support for PanelDue
 ; auto select t0 since we only have 1!
 M107 ; start with all fans off
 T0   ; Select first tool
+
+; Define MCU sensors which will be available in DWC Extra View
+M308 S3 A"MCU" Y"mcu-temp" 				; Officially NOT supported on Mini 3 5+ however seem to work
+M308 S4 A"Duet Drivers" Y"drivers" 		; This is not really working as it is just a threshold crossing
 
 ; Prepare global vars for print macros
 ;global bed_temp = 0

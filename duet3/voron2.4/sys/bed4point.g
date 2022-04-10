@@ -19,9 +19,9 @@ M558 F60 A3                              ; fix probe speed to 1mm/s
 G90
 G4 P250
 
-G30 K0 P0 X15 Y15 Z-99999 ; probe near front left belt
-G30 K0 P1 X15 Y255 Z-99999 ; probe near back left belt
+G30 K0 P0 X10 Y0 Z-99999 ; probe near front left belt
+G30 K0 P1 X10 Y255 Z-99999 ; probe near back left belt
 G30 K0 P2 X285 Y255 Z-99999 ; probe near back right belt 
-G30 K0 P3 X285 Y15 Z-99999 S4 ; probe near front right belt 
+G30 K0 P3 X285 Y10 Z-99999 S4 ; probe near front right belt 
 
 echo "bed4point.g complete" 

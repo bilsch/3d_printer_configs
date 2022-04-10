@@ -13,13 +13,16 @@ M290 S0 R0                                      ; clear baby steps
 G91                                             ; relative positioning
 G1 H2 Z6 F6000                                  ; lift Z relative to current position to clear any obstructions
 M400
-echo "Call fixed_probe macro"
+
+echo "Call fixed_probe macro" ; we'll reverence z=0 from this probe
 M98 P"0:/macros/Home/zprobe_fixed.g"            ; First hit the nozzle probe
-G90                                             ; absolute positioning
+G90
+                                             ; absolute positioning
 echo "Call deployprobe.g macro" 
 M401 P0                                         ; This runs macro file deployprobe
 echo "Return"
-G1 X145 Y162.5 F9000                            ; go to center of bed in advance of probe that point
+G1 X145 Y140 F9000                            ; go to center of bed in advance of probe that point
+
 M400
 echo "G30 Command"
 G30                                             ; Probe the bed at the current XY position. When the probe is triggered, 
@@ -35,6 +38,6 @@ G30
 echo "DISABLED - Call retractprobe.g macro"
 M402 P0                                         ; retract probe
 echo "Return"
-G1 Z10 F600                                     ; lift Z relative to current position
+G1 Z10 F9000                                     ; lift Z relative to current position
 G90                                             ; absolute positioning
 M564 S1 H0                                      ; reset the bounding limits

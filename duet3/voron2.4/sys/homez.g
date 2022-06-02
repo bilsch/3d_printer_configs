@@ -35,7 +35,6 @@ M98 P"0:/sys/bed4point.g"                       ; tram bed
 echo "Return"
 G1 X145 Y162.5 F9000                              ; go back to the first probe point and reprobe 0 in case it moved
 G30
-echo "DISABLED - Call retractprobe.g macro"
 M402 P0                                         ; retract probe
 echo "Return"
 G1 Z10 F9000                                     ; lift Z relative to current position

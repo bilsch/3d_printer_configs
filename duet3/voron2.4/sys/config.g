@@ -36,14 +36,21 @@ M569 P1.0 S0
 M584 X0.4 Y0.5 Z0.2:0.1:0.0:0.3 E1.0               	; set drive mapping
 
 ; General drive config like speeds, accel, jerk, etc
-M350 X16 Y16 Z16:16:16:16 E16 I1                   	; configure microstepping with interpolation
-M92 X160.00 Y160.00 Z800.00 E410.00         			; set steps per mm
+; drivers at 128 micros
+M350 X128 Y128 E16 Z128 I1                          ; x, y and z are at 128 microstep. e0 there is no point
+; drivers at 16 micros
+; M360 X16 Y16 E16 Z16 I1
+M92 X1280 Y1280 Z6400 E410         		            ; set steps per mm
 M566 X600.00 Y600.00 Z60.00 E8000.00       			; set maximum instantaneous speed changes (mm/min)
 M203 X10000.00 Y10000.00 Z3000 E2000		       	; set maximum speeds (mm/min)
 M201 X1000.00 Y1000.00 Z350.00 E1800.00    			; set accelerations (mm/s^2)
-M204 P750 T750									; set printing acceleration and travel acceleration
-M906 X2000 Y2000 Z2000 E850 I60                	; set motor currents (mA) and motor idle factor in per cent
-M84 S30  
+M204 P750 T750									    ; set printing acceleration and travel acceleration
+M906 X2000 Y2000 Z2000 E850 I60                	    ; set motor currents (mA) and motor idle factor in per cent
+M84 S30
+
+; For now, we set the values for current at actual stepper but we reduce for real running
+M98 P"0:/macros/Home/xy_current_low.g"
+M98 P"0:/macros/Home/z_current_low.g"
 
 ; Axis Limits
 M208 X0:298 Y0:298 ; We can make this better by lowering the probe doc but f that for now
@@ -67,10 +74,10 @@ M558 K0 P8 C"io7.in" I1 H5 F350:120 T18000 A5 S0.01 R0.2  ; set Z probe type to 
 ; TODO: 1) 9.45 was off by about .55 earlier but hotend not tightened
 ;       2) we still need to ensure the z pole coords are right, should be the same gauge feel across the board. Not done yet
 
-G31 K0 P500 X0 Y0 Z9.45                                   ; set Z probe trigger value, offset and trigger height
+G31 K0 P500 X0 Y25 Z9.45                                   ; set Z probe trigger value, offset and trigger height
 
 ; Belt Locations
-M671 X-65:-65:365:365 Y0:395:395:0 S20      ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
+M671 X-75:-22:360:370 Y0:395:395:0 S20      ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
 											; Position of the bed leadscrews.. 4 Coordinates
 											; Snn Maximum correction to apply to each leadscrew in mm (optional, default 1.0); M557 X0:285 Y0:255 S50                           	; define mesh grid
 M557 X30:280 Y30:280 P3                     ; define mesh grid, probe 4 points
@@ -84,12 +91,10 @@ M143 H0 S120                                       	; Set temperature limit for 
 M570 H0 T3											; Start screaming if temp falls 3C below set temp. 
 
 ; Hotend
-M308 S1 P"1.temp0" Y"pt1000"                      ; configure sensor temp0 as pt1000 on pin 121.temp0
+M308 S1 P"1.temp0" Y"thermistor" T100000 B4725 C7.060000e-8                      ; e3d revo voron
 M950 H1 C"1.out0" T1                              ; create nozzle heater output on 121.out0 and map it to sensor 1
-
-; e3d v6
-; need to run pid tuning some day
-; M307 H1 R2.921 C156.5 D5.20 S1.00 V24.0					 
+M143 H1 S295 ; max hotend temp
+M307 H1 B0 R4.891 C112.4:92.8 D2.69 S1.00 V24.1   ; pid tune 5/10/2022 at 225C				 
 
 ; DHT22 sensor
 ; M308 S10 P"0.spi.cs1" Y"dht22"       A"Chamber Temp"    ; Temperature (connected to cs0 port on the temp daughterboard slot

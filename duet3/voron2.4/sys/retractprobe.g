@@ -30,7 +30,7 @@ echo "pass first logic loop"
 
 G1 X60 Y295 Z10 F3000         ; move to ready position 
 G1 Z5.5 F3000                  ; drop down for dock - note this value comes *after* you figure out your probe offset
-G4 P4000
+G4 P3000
 G1 X22 Y295 F3000          ; move into the dock position
 G1 Z30 F3000 ; lift to detach euclid
 G1 Y200 ;  just get out of the way

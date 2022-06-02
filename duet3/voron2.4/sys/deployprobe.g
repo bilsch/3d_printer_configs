@@ -47,7 +47,7 @@ M564 H1 S0                    ; Allow movement BEYOND axes boundaries (for Y to 
 
 G91                           ; relative positioning
 echo "Lift Z in advance of deploy" 
-G1 H2 Z20 F3000               ; move Z for clearance above dock.
+G1 H2 Z7 F3000               ; move Z for clearance above dock.
 ;                             ; need to figure out some safety check on this
 G90                           ; absolute positioning
 
@@ -67,7 +67,7 @@ echo "Passed first logic test to deploy probe"
 G0 X22 Y295              ; move to Preflight Position
 M400                          ; wait for moves to finish
 G91                           ; realtive coordiantes
-; G1 H2 Z-20                       ; recover the z clearance
+G1 H2 Z-7                       ; recover the z clearance
 
 echo "Probe Pickup while loop running"
 

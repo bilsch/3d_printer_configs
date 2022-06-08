@@ -17,7 +17,7 @@ G90	                          ; absolute positioning
 
 M564 S0                       ; allow beyond limit axis to print area
 
-if sensors.probes[0].value[0]!= 0
+if sensors.probes[0].value[0] != 0
     echo "Probe Value =" ^sensors.probes[0].value[0]
     echo "Object Model Deployuser token =" ^sensors.probes[0].deployedByUser
     abort "retractprobe: Probe not currently picked up!"
@@ -28,16 +28,12 @@ echo "pass first logic loop"
 ; echo "Probe Value =" ^sensors.probes[0].value[0]
 ; echo "Object Model Deployuser token =" ^sensors.probes[0].deployedByUser
 
-G1 X60 Y295 Z10 F3000         ; move to ready position 
-G1 Z5.5 F3000                  ; drop down for dock - note this value comes *after* you figure out your probe offset
-G4 P3000
-G1 X22 Y295 F3000          ; move into the dock position
-G1 Z30 F3000 ; lift to detach euclid
-G1 Y200 ;  just get out of the way
-G1 X200 ; so we don't yank the probe back out
+G1 X60 Y297 F3000         ; move to ready position 
+G1 X0 Y297 F3000          ; move into the dock position
+G1 X0 Y250 F3000 ; move y forward to detach
 M400
 
-if sensors.probes[0].value[0]!= 1000
+if sensors.probes[0].value[0] != 1000
     ; echo "Probe Value =" ^sensors.probes[0].value[0]
     ; echo "Object Model Deployuser token =" ^sensors.probes[0].deployedByUser
     M564 S1                       ; limit axis to print area

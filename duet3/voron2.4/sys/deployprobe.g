@@ -45,12 +45,6 @@ echo "Object Model Deployuser token =" ^sensors.probes[0].deployedByUser
 
 M564 H1 S0                    ; Allow movement BEYOND axes boundaries (for Y to reach probe dock)
 
-G91                           ; relative positioning
-echo "Lift Z in advance of deploy" 
-G1 H2 Z7 F3000               ; move Z for clearance above dock.
-;                             ; need to figure out some safety check on this
-G90                           ; absolute positioning
-
 echo "Probe Value =" ^sensors.probes[0].value[0]
 
 if sensors.probes[0].value[0]!=1000    ; if sensor is value other than 1000 do this
@@ -64,10 +58,9 @@ echo "Passed first logic test to deploy probe"
 
 ;; note this just moves right over the probe and drops z to pick it up
 
-G0 X22 Y295              ; move to Preflight Position
+G0 X0 Y280              ; move to Preflight Position
 M400                          ; wait for moves to finish
 G91                           ; realtive coordiantes
-G1 H2 Z-7                       ; recover the z clearance
 
 echo "Probe Pickup while loop running"
 
@@ -75,38 +68,27 @@ echo "Probe Pickup while loop running"
 echo "Object Model Deployuser token (before while loop) = " ^sensors.probes[0].deployedByUser
 
 G90                           ; absolute coordinates
-G1 X22 Y295 F3000                ; move over dock
+G1 X0 Y297 F3000                ; move over dock
 G4 S1                         ; pause for pickup 
 M400                          ; wait for moves to finish
 
-while sensors.probes[0].value[0]=1000
-  ; echo "Probe Pickup while loop running"
-  G91                         ; realtive coordiantes
-  G1 H2 Z-0.25 F2500              ; jog bed up 0.25mm change to suit user preference
-  M400                        ; wait for moves to finish, allow polling interval to trigger and check probe value
-  G90                         ; absolute coordinates
-  ; echo sensors.probes[0].value[0]
-  ; echo iterations
-  if iterations=400           ; if probe has moved 100*step increment without pickup detection, exit loop
-     abort "Failed to pick up Probe after 100 iterations.  Sanity check things and try again"
-     break
-
+if sensors.probes[0].value[0] = 1000
+   abort "probe pickup failed please investigate"
+   break
 
 G4 P250                       ; pause 1 seconds
 echo "Probe Value =" ^sensors.probes[0].value[0]
-G1 X60 Y295 F1200               ;  slide probe out of dock - slowly
+G1 X60 Y297 F1200               ;  slide probe out of dock - slowly
 M400
 G4 P250                       ; pause 1 seconds
 
-G91                         ; realtive coordiantes
-G1 H2 Z18 F1500              ; jog bed up 0.25mm change to suit user preference
 if sensors.probes[0].value[0]=0;
     echo "probe pickup successful"
 else
-    abort "probe pickup appears to have failed - did it fall off?"
+    abort "probe pickup appears to have failed please investigate"
 
 G90                           ; absolute positioning
-G1 X145 Y140 F3000        ; move bed to clear probe from build surface 
+G1 X0 Y0 F9000        ; move bed to clear probe from build surface 
 M400                          ; wait for moves to finish
 
 M564 H1 S1                    ; Restrict movement to within axes boundaries (for normal Y movement)

@@ -37,10 +37,10 @@ M584 X0.4 Y0.5 Z0.2:0.1:0.0:0.3 E1.0               	; set drive mapping
 
 ; General drive config like speeds, accel, jerk, etc
 ; drivers at 128 micros
-M350 X128 Y128 E16 Z128 I1                          ; x, y and z are at 128 microstep. e0 there is no point
+M350 X256 Y256 E16 Z256 I1                          ; x, y and z are at 128 microstep. e0 there is no point
 ; drivers at 16 micros
 ; M360 X16 Y16 E16 Z16 I1
-M92 X1280 Y1280 Z6400 E410         		            ; set steps per mm
+M92 X2560 Y2560 Z12800 E410         		            ; set steps per mm
 M566 X600.00 Y600.00 Z60.00 E8000.00       			; set maximum instantaneous speed changes (mm/min)
 M203 X10000.00 Y10000.00 Z3000 E2000		       	; set maximum speeds (mm/min)
 M201 X1000.00 Y1000.00 Z350.00 E1800.00    			; set accelerations (mm/s^2)
@@ -53,8 +53,8 @@ M98 P"0:/macros/Home/xy_current_low.g"
 M98 P"0:/macros/Home/z_current_low.g"
 
 ; Axis Limits
-M208 X0:298 Y0:298 ; We can make this better by lowering the probe doc but f that for now
-M208 Z-10:265
+M208 X0:297 Y0:297 ; We can make this better by lowering the probe doc but f that for now
+M208 Z-10:250
 
 ; Endstops
 M574 X2 S1 P"io3.in"                               ; microswitch
@@ -71,16 +71,20 @@ G31 K1 P500 X0 Y0 Z0                          ; set Z probe trigger value, offse
 ; note euclid probe hangs down from the tool carriage
 ; The trigger height here is used to set z=0 later ;)
 M558 K0 P8 C"io7.in" I1 H5 F350:120 T18000 A5 S0.01 R0.2  ; set Z probe type to switch and the dive height + speeds
-; TODO: 1) 9.45 was off by about .55 earlier but hotend not tightened
-;       2) we still need to ensure the z pole coords are right, should be the same gauge feel across the board. Not done yet
-
-G31 K0 P500 X0 Y25 Z9.45                                   ; set Z probe trigger value, offset and trigger height
+G31 K0 P500 X0 Y25 Z7.912                                 ; set Z probe trigger value, offset and trigger height
 
 ; Belt Locations
-M671 X-75:-22:360:370 Y0:395:395:0 S20      ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
+; M671 X-75:-22:360:370 Y0:395:395:0 S20      ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
 											; Position of the bed leadscrews.. 4 Coordinates
 											; Snn Maximum correction to apply to each leadscrew in mm (optional, default 1.0); M557 X0:285 Y0:255 S50                           	; define mesh grid
-M557 X30:280 Y30:280 P3                     ; define mesh grid, probe 4 points
+; M557 X30:280 Y30:280 P3                     ; define mesh grid, probe 4 points
+
+; Bed leveling params
+M671 X-46:-46:345:345 Y9:368:368:9 S20	        ; Z leadscrews positions
+M557 X50:250 Y50:250 S25                        ; Bed mesh grid
+
+; thermal section ----------------------------------------------
+M308 S3 Y"mcu-temp" A"Board" ; Board thermal sensor
 
 ; Hotbed
 M308 S0 P"temp0" Y"thermistor" T100000 B4138       	; Thermistor
@@ -100,11 +104,15 @@ M307 H1 B0 R4.891 C112.4:92.8 D2.69 S1.00 V24.1   ; pid tune 5/10/2022 at 225C
 ; M308 S10 P"0.spi.cs1" Y"dht22"       A"Chamber Temp"    ; Temperature (connected to cs0 port on the temp daughterboard slot
 ; M308 S11 P"S10.1"     Y"dhthumidity" A"Chamber Hum[%]"  ; Humidity
 
+;Chamber sensor (DHT22)
+M308 S7 P"0.spi.cs6" Y"dht22"    A"Chamber Temp"          ; define DHT22 temperature sensor
+M308 S8 P"S7.1" Y"dhthumidity" A"Chamber Hum[%]"        ; Attach DHT22 humidity sensor to secondary output of temperature senso
+
 ; Main fans
 M950 F0 C"1.out6" Q500                         ; create fan 0 on pin 121.out1 and set its frequency
-M106 P0 S0 H-1                                   ; set fan 0 value. Thermostatic control is turned off
+M106 P0 S0 H-1 C"Part fan"                                  ; set fan 0 value. Thermostatic control is turned off
 M950 F1 C"1.out7" Q500                         ; create fan 1 on pin 121.out2 and set its frequency
-M106 P1 S1 H1 T60                                ; set fan 1 value. Thermostatic control is turned on
+M106 P1 S1 H1 C"Hotend Fan" T60                                ; set fan 1 value. Thermostatic control is turned on
 
 ; Tools
 M563 P0 S"v6" D0 H1 F0                ; define tool 0

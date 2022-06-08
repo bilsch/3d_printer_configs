@@ -23,9 +23,13 @@ while true
   if iterations = 2
     break
   else
-    G30 K0 P0 X30 Y30 Z-99999 ; probe near front left belt
-    G30 K0 P1 X30 Y225 Z-99999 ; probe near back left belt
-    G30 K0 P2 X265 Y225 Z-99999 ; probe near back right belt 
-    G30 K0 P3 X265 Y30 Z-99999 S4 ; probe near front right belt 
+    ; G30 K0 P0 X30 Y30 Z-99999 ; probe near front left belt
+    ; G30 K0 P1 X30 Y225 Z-99999 ; probe near back left belt
+    ; G30 K0 P2 X265 Y225 Z-99999 ; probe near back right belt 
+    ; G30 K0 P3 X265 Y30 Z-99999 S4 ; probe near front right belt 
+	G30 P0 X040 Y260 Z-10000 H+0.00
+    G30 P1 X040 Y040 Z-10000 H+0.00
+    G30 P2 X260 Y040 Z-10000 H+0.00
+    G30 P3 X260 Y260 Z-10000 H+0.00 S
 
 echo "bed4point.g complete" 

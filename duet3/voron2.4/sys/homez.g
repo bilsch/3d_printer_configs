@@ -16,7 +16,8 @@ M400
 
 ; echo "Call fixed_probe macro" ; we'll reverence z=0 from this probe
 ; M98 P"0:/macros/Home/zprobe_fixed.g"            ; First hit the nozzle probe
-; G90
+
+G90
                                              ; absolute positioning
 echo "Call deployprobe.g macro" 
 M401 P0                                         ; This runs macro file deployprobe

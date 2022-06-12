@@ -40,6 +40,8 @@ M584 X0.4 Y0.5 Z0.2:0.1:0.0:0.3 E1.0               	; set drive mapping
 M350 X256 Y256 E16 Z256 I1                          ; x, y and z are at 128 microstep. e0 there is no point
 ; drivers at 16 micros
 ; M360 X16 Y16 E16 Z16 I1
+; Steps per mm = ((360°/Motor step size°) * (1/Driver microstepping))/(Belt pitch * Tooth count)
+; steps calc: ((360/.9) * (1/(1/256)))/(2 * 20)
 M92 X2560 Y2560 Z12800 E410         		            ; set steps per mm
 M566 X600.00 Y600.00 Z60.00 E8000.00       			; set maximum instantaneous speed changes (mm/min)
 M203 X10000.00 Y10000.00 Z3000 E2000		       	; set maximum speeds (mm/min)

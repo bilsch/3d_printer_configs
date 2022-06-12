@@ -58,7 +58,7 @@ echo "Passed first logic test to deploy probe"
 
 ;; note this just moves right over the probe and drops z to pick it up
 
-G0 X0 Y280              ; move to Preflight Position
+G0 X0 Y270              ; move to Preflight Position
 M400                          ; wait for moves to finish
 G91                           ; realtive coordiantes
 

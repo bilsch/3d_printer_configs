@@ -11,7 +11,7 @@ if !move.axes[0].homed || !move.axes[1].homed     ; If the printer hasn't been h
 M561                                            ; clear any bed transform
 M290 S0 R0                                      ; clear baby steps 
 G91                                             ; relative positioning
-G1 H2 Z6 F6000                                  ; lift Z relative to current position to clear any obstructions
+G1 H2 Z10 F6000                                  ; lift Z relative to current position to clear any obstructions
 M400
 
 ; echo "Call fixed_probe macro" ; we'll reverence z=0 from this probe

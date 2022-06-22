@@ -73,7 +73,7 @@ G31 K1 P500 X0 Y0 Z0                          ; set Z probe trigger value, offse
 ; note euclid probe hangs down from the tool carriage
 ; The trigger height here is used to set z=0 later ;)
 M558 K0 P8 C"io7.in" I1 H5 F350:120 T18000 A5 S0.01 R0.2  ; set Z probe type to switch and the dive height + speeds
-G31 K0 P500 X0 Y25 Z7.912                                 ; set Z probe trigger value, offset and trigger height
+G31 K0 P500 X0 Y25 Z7.96                                 ; set Z probe trigger value, offset and trigger height
 
 ; Belt Locations
 ; M671 X-75:-22:360:370 Y0:395:395:0 S20      ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)

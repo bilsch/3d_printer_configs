@@ -23,13 +23,16 @@ while true
   if iterations = 2
     break
   else
-    ; G30 K0 P0 X30 Y30 Z-99999 ; probe near front left belt
-    ; G30 K0 P1 X30 Y225 Z-99999 ; probe near back left belt
-    ; G30 K0 P2 X265 Y225 Z-99999 ; probe near back right belt 
-    ; G30 K0 P3 X265 Y30 Z-99999 S4 ; probe near front right belt 
-	G30 P0 X040 Y260 Z-10000 H+0.00
-    G30 P1 X040 Y040 Z-10000 H+0.00
-    G30 P2 X260 Y040 Z-10000 H+0.00
-    G30 P3 X260 Y260 Z-10000 H+0.00 S
+    ;;;; M671 X-65:-65:365:365 Y0:395:395:0 S20 ; voron discord
+    G30 K0 P0 X30 Y30 Z-99999 ; probe near front left belt
+    G30 K0 P1 X30 Y225 Z-99999 ; probe near back left belt
+    G30 K0 P2 X265 Y225 Z-99999 ; probe near back right belt 
+    G30 K0 P3 X265 Y30 Z-99999 S4 ; probe near front right belt 
+	
+	
+	; G30 P0 X040 Y260 Z-10000 ; H+1.55
+    ; G30 P1 X040 Y040 Z-10000 ; H-0.05
+    ; G30 P2 X260 Y040 Z-10000 ; H-0.06
+    ; G30 P3 X260 Y260 Z-10000 ; H+0.35 S
 
 echo "bed4point.g complete" 

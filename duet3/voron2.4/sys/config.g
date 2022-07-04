@@ -51,8 +51,8 @@ M906 X2000 Y2000 Z2000 E850 I60                	    ; set motor currents (mA) an
 M84 S30
 
 ; For now, we set the values for current at actual stepper but we reduce for real running
-M98 P"0:/macros/Home/xy_current_low.g"
-M98 P"0:/macros/Home/z_current_low.g"
+M98 P"0:/macros/Home/xy_current_high.g"
+M98 P"0:/macros/Home/z_current_high.g"
 
 ; Axis Limits
 M208 X0:297 Y0:297 ; We can make this better by lowering the probe doc but f that for now
@@ -73,7 +73,7 @@ G31 K1 P500 X0 Y0 Z0                          ; set Z probe trigger value, offse
 ; note euclid probe hangs down from the tool carriage
 ; The trigger height here is used to set z=0 later ;)
 M558 K0 P8 C"io7.in" I1 H5 F350:120 T18000 A5 S0.01 R0.2  ; set Z probe type to switch and the dive height + speeds
-G31 K0 P500 X0 Y25 Z7.96                                 ; set Z probe trigger value, offset and trigger height
+G31 K0 P500 X0 Y25 Z8.07                                 ; set Z probe trigger value, offset and trigger height
 
 ; Belt Locations
 ; M671 X-75:-22:360:370 Y0:395:395:0 S20      ; Define Z belts locations (Front_Left, Back_Left, Back_Right, Front_Right)
@@ -82,11 +82,19 @@ G31 K0 P500 X0 Y25 Z7.96                                 ; set Z probe trigger v
 ; M557 X30:280 Y30:280 P3                     ; define mesh grid, probe 4 points
 
 ; Bed leveling params
-M671 X-46:-46:345:345 Y9:368:368:9 S20	        ; Z leadscrews positions
-M557 X50:250 Y50:250 S25                        ; Bed mesh grid
+M671 X:-67:-67:385:385 Y:10:370:370:10 S20	        ; mine, measured
+
+; from tom's
+; M671 X-60:-60:357:357 Y-6:365:365:-6
+
+; M671 X-65:-65:365:365 Y0:395:395:0 S20 ; voron discord
+
+
+M557 X50:250 Y50:250 P5                        ; Bed mesh grid
 
 ; thermal section ----------------------------------------------
 M308 S3 Y"mcu-temp" A"Board" ; Board thermal sensor
+; M308 S3 Y"1.mcu-temp" A"Board" ; Board thermal sensor
 
 ; Hotbed
 M308 S0 P"temp0" Y"thermistor" T100000 B4138       	; Thermistor
@@ -103,12 +111,8 @@ M143 H1 S295 ; max hotend temp
 M307 H1 B0 R4.891 C112.4:92.8 D2.69 S1.00 V24.1   ; pid tune 5/10/2022 at 225C				 
 
 ; DHT22 sensor
-; M308 S10 P"0.spi.cs1" Y"dht22"       A"Chamber Temp"    ; Temperature (connected to cs0 port on the temp daughterboard slot
-; M308 S11 P"S10.1"     Y"dhthumidity" A"Chamber Hum[%]"  ; Humidity
-
-;Chamber sensor (DHT22)
-M308 S7 P"0.spi.cs6" Y"dht22"    A"Chamber Temp"          ; define DHT22 temperature sensor
-M308 S8 P"S7.1" Y"dhthumidity" A"Chamber Hum[%]"        ; Attach DHT22 humidity sensor to secondary output of temperature senso
+M308 S10 P"0.spi.cs1" Y"dht22"       A"Chamber Temp"    ; Temperature (connected to cs0 port on the temp daughterboard slot
+M308 S11 P"S10.1"     Y"dhthumidity" A"Chamber Hum[%]"  ; Humidity
 
 ; Main fans
 M950 F0 C"1.out6" Q500                         ; create fan 0 on pin 121.out1 and set its frequency
@@ -133,7 +137,13 @@ T0   ; Select first tool
 
 ; Define MCU sensors which will be available in DWC Extra View
 M308 S3 A"MCU" Y"mcu-temp" 				; Officially NOT supported on Mini 3 5+ however seem to work
-M308 S4 A"Duet Drivers" Y"drivers" 		; This is not really working as it is just a threshold crossing
+M308 S4 A"6hc Drivers" Y"drivers" 		; This is not really working as it is just a threshold crossing
+; M308 S3 A"MCU" Y"1.mcu-temp" 				; Officially NOT supported on Mini 3 5+ however seem to work
+; M308 S4 A"3hc Drivers" Y"1.drivers" 		; This is not really working as it is just a threshold crossing
+
+; this is a bad idea, home z first then run mesh compensation
+; error message from controller: Warning: The height map was loaded when the current Z=0 datum was not determined. This may result in a height offset.
+; G29 S1 ; load heightmap.cv
 
 ; Prepare global vars for print macros
 ;global bed_temp = 0
